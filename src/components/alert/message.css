@@ -1,0 +1,99 @@
+.message-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+    background-color: rgba(13, 13, 13, 0.2);
+}
+
+.message-overlay-back {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(13, 13, 13, 0.2);
+}
+
+.message-content {
+    padding: 10px;
+    max-width: 300px;
+    max-height: 210px;
+    background: white;
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
+    display: block;
+}
+
+.message-header {
+    display: flex;
+    font-size: 14px;
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+.message-icon {
+    border-radius: 3px;
+    color: #f43333;
+    background: #eeeeee;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 45px;
+    height: 45px;
+}
+
+.message-description {
+    font-size: 12px;
+    color: #9D9C9C;
+}
+
+.message-action {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.message-action button .no {
+    width: 100%;
+}
+
+.message-action button {
+    width: 133px;
+    /* margin-left: 10px; */
+}
+
+.yes {
+    background-color: #D24040;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.yes:hover {
+    background-color: #992929;
+}
+
+.no {
+    background-color: #1F93D2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.no:hover {
+    background-color: #2c739a;
+}

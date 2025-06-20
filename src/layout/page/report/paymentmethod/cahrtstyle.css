@@ -1,0 +1,13 @@
+/* chartStyles.css */
+.chart-container {
+    width: 100%;
+    /* Adjust height as needed */
+    position: relative;
+}
+
+.chart-container canvas {
+    width: 100% !important;
+    /* Ensure the canvas takes up 100% width */
+    height: auto !important;
+    /* Maintain aspect ratio */
+}

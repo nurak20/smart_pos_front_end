@@ -1,0 +1,80 @@
+.receipt-page {
+    display: flex;
+    flex-direction: column;
+    width: 57mm;
+    max-width: 100%;
+    padding: 5mm;
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    line-height: 1.4;
+}
+
+.receipt-left-panel,
+.receipt-right-panel {
+    margin-bottom: 5mm;
+}
+
+.receipt-title {
+    font-size: 14px;
+    margin-bottom: 3mm;
+}
+
+.receipt-subtitle {
+    font-size: 12px;
+    margin-top: 2mm;
+    margin-bottom: 2mm;
+}
+
+.receipt-text {
+    margin: 1mm 0;
+}
+
+.receipt-print-button {
+    display: block;
+    margin: 3mm 0;
+    padding: 3mm;
+    font-size: 12px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.receipt-print-button:hover {
+    background-color: #0056b3;
+}
+
+.receipt-payment-methods,
+.receipt-payment-summary {
+    margin: 3mm 0;
+}
+
+.receipt-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 3mm;
+}
+
+.receipt-table-header {
+    text-align: left;
+    font-weight: bold;
+    border-bottom: 1px solid black;
+    padding: 2mm 0;
+}
+
+.receipt-table-cell {
+    padding: 1mm 0;
+    border-bottom: 1px solid #ddd;
+}
+
+@media print {
+    .receipt-page {
+        width: 57mm;
+        padding: 0;
+        margin: 0 auto;
+    }
+
+    .receipt-print-button {
+        display: none;
+    }
+}

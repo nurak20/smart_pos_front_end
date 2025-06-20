@@ -1,0 +1,55 @@
+.latlng-picker {
+    position: relative;
+    width: 100%;
+}
+
+/* must give it a real height */
+.map-element {
+    width: 100%;
+    /* height is set via the `height` prop or defaulted to 400px */
+}
+
+/* Reset-to-default button top‐left */
+.reset-button {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 1000;
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 4px 8px;
+    cursor: pointer;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* two marker styles */
+
+.default-map-marker .marker-pin {
+    width: 20px;
+    height: 20px;
+    background: #6c757d;
+    /* gray */
+    border-radius: 50% 50% 50% 0;
+    transform: rotate(-45deg);
+    position: relative;
+    top: -10px;
+}
+
+.selected-map-marker .marker-pin {
+    width: 20px;
+    height: 20px;
+    background: #007bff;
+    /* blue */
+    border-radius: 50% 50% 50% 0;
+    transform: rotate(-45deg);
+    position: relative;
+    top: -10px;
+}
+
+/* optional coords display */
+.coords-display {
+    margin-top: 8px;
+    font-size: 0.9em;
+    color: #333;
+}

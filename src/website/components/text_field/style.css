@@ -1,0 +1,60 @@
+.pos-form-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    border: 1px solid var(--components-light-color);
+    border-radius: 0px;
+    transition: border-color 0.2s ease-in-out;
+}
+
+/* highlight when child input is focused */
+.pos-form-group:focus-within {
+    border-color: var(--components-color);
+}
+
+/* error on the wrapper */
+.pos-form-group.pos-input-field--error {
+    border-color: var(--components-error-color) !important;
+}
+
+.pos-input-fields {
+    flex: 1;
+    /* fill space between icons */
+    border: none;
+    background: none;
+    padding: 0;
+    /* you’re already setting padding via inline style */
+    margin: 0;
+}
+
+/* kill any browser focus styles */
+.pos-input-fields:focus,
+.pos-input-fields:focus-visible {
+    outline: none;
+    box-shadow: none;
+}
+
+/* error on the input itself */
+.pos-input-fields.pos-input-field--error {
+    border: 1px solid var(--components-error-color) !important;
+    border-radius: 6px;
+}
+
+.pos-field-error {
+    color: var(--components-error-color);
+    font-size: 14px;
+    margin-top: 4px;
+    text-align: right;
+    /* match your JSX `text-end` */
+}
+
+.pos-input-label {
+    font-size: 14px;
+    padding: 7px 0px 0px 0px;
+    font-weight: 400;
+}
+
+.label-required {
+    color: var(--components-error-color);
+}

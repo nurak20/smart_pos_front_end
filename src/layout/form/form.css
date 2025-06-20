@@ -1,0 +1,123 @@
+/* General Container */
+.login-container {
+    font-family: Arial, sans-serif;
+    /* padding: 2rem; */
+    background-color: #ffffff;
+    height: 100vh;
+}
+
+/* Header */
+.header {
+    text-align: center;
+    margin-bottom: 2rem;
+    display: flex;
+    justify-content: center;
+
+    align-items: center;
+    background: #005f73;
+    width: 100%;
+    height: 300px;
+}
+
+.logo {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+.tagline {
+    font-size: 1rem;
+    color: #e5e5e5;
+}
+
+/* Tabs */
+.tabs {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    /* padding: 0px 100px; */
+}
+
+.tab {
+    background: #ffffff;
+    border: 1px solid #ddd;
+    padding: 0.75rem 1.5rem;
+    cursor: pointer;
+    width: 100%;
+    font-size: 1rem;
+    color: #0a9396;
+    transition: all 0.3s;
+}
+
+.tab.active {
+    background: #0a9396;
+    color: white;
+    border-color: #0a9396;
+}
+
+/* Form */
+.form {
+    width: 100%;
+    max-width: 1000px;
+    display: flex;
+    flex-direction: column;
+}
+
+.input {
+    width: 100%;
+    padding: 0.75rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+.password-container {
+    position: relative;
+}
+
+.password-container .toggle-visibility {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+.login-btn {
+    background-color: #0a8196;
+    color: white;
+    padding: 15px 10px;
+    border: none;
+    font-size: 1rem;
+    cursor: pointer;
+    max-width: 1000px;
+    width: 100%;
+    transition: background-color 0.3s;
+}
+
+.login-btn:hover {
+    background-color: #005f73;
+}
+
+/* Footer Links */
+.footer-links {
+    display: flex;
+    justify-content: space-between;
+    width: 90%;
+    max-width: 400px;
+    margin-top: 1rem;
+}
+
+.footer-links a {
+    color: #0a9396;
+    text-decoration: none;
+    font-size: 0.9rem;
+    display: block;
+}
+
+.footer-links a:hover {
+    text-decoration: underline;
+}

@@ -1,0 +1,170 @@
+{
+    "ButtonLabel": {
+        "AddtoCart": {
+            "km": "ដាក់ចូលកន្ទ្រក",
+            "en": "Add to Cart"
+        }
+    },
+    "Label": {
+        "RelatedProduct": {
+            "km": "ផលិតផលស្រដៀងគ្នា",
+            "en": "Related Product"
+        },
+        "AvialableStock": {
+            "km": "មានក្នុងស្តុក",
+            "en": "Avialable Stock"
+        },
+        "NewItem": {
+            "km": "ផលិតផលថ្មី",
+            "en": "New"
+        },
+        "Quantity": {
+            "km": "ទិញចំនួន",
+            "en": "Quantity"
+        },
+        "Warranty": {
+            "km": "ធានារយះពេល",
+            "en": "Warranty"
+        },
+        "Home": {
+            "km": "ទំព័រដើម",
+            "en": "Home"
+        },
+        "Product": {
+            "km": "ផលិតផល",
+            "en": "Product"
+        },
+        "Shop": {
+            "km": "ទំនិញទាំងអស់",
+            "en": "Shop"
+        },
+        "NewArrivals": {
+            "km": "ផលិតផលនាំចូលថ្មី",
+            "en": "New Arrivals"
+        },
+        "Submit": {
+            "km": "​ចុះឈ្មោះ",
+            "en": "Submit"
+        },
+        "AccountRegister": {
+            "km": "បង្កើតគណនីថ្មី",
+            "en": "Account Registration"
+        },
+        "AlreadyHaveAccount": {
+            "km": "មានគណនីរួចហើយ? ",
+            "en": "Already have an account?"
+        },
+        "AccountLogin": {
+            "km": "ចូលគណនី",
+            "en": "Account Login"
+        },
+        "EditProfile": {
+            "km": "កែប្រែប្រវត្តិរូបភាព",
+            "en": "Edit Profile"
+        },
+        "OrderInformation": {
+            "en": "Order Information",
+            "km": "ព័ត៌មានការបញ្ជាទិញ"
+        },
+        "PlaceOrder": {
+            "en": "Place Order",
+            "km": "បញ្ជាទិញ"
+        },
+        "BackToProducts": {
+            "en": "Back",
+            "km": "ត្រឡប់"
+        },
+        "CreateProduct": {
+            "en": "Create New Products",
+            "km": "បង្កើតទំនិញថ្មី"
+        },
+        "LabelForm": {
+            "FirstName": {
+                "en": "First Name",
+                "km": "នាមដើម"
+            },
+            "LastName": {
+                "en": "Last Name",
+                "km": "នាមត្រកូល"
+            },
+            "Email": {
+                "en": "Email",
+                "km": "អ៊ីមែល"
+            },
+            "Password": {
+                "en": "Password",
+                "km": "ពាក្យសម្ងាត់"
+            },
+            "ConfirmPassword": {
+                "en": "Confirm Password",
+                "km": "បញ្ជាក់ពាក្យសម្ងាត់"
+            },
+            "PhoneNumber": {
+                "en": "Phone Number",
+                "km": "លេខទូរស័ព្ទ"
+            },
+            "Address": {
+                "en": "Address",
+                "km": "អាសយដ្ឋាន"
+            },
+            "City": {
+                "en": "City",
+                "km": "ទីក្រុង"
+            },
+            "StateProvince": {
+                "en": "State/Province",
+                "km": "ខេត្ត/រដ្ឋ"
+            },
+            "PostalCode": {
+                "en": "Postal Code",
+                "km": "លេខកូដប្រៃសណីយ៍"
+            },
+            "Country": {
+                "en": "Country",
+                "km": "ប្រទេស"
+            },
+            "SaveChanges": {
+                "en": "Save Changes",
+                "km": "រក្សាទុក ការផ្លាស់ប្តូរ"
+            }
+        }
+    },
+    "ValidationMessages": {
+        "FirstNameRequired": {
+            "en": "First name is required.",
+            "km": "សូមបញ្ចូលនាមដើម។"
+        },
+        "LastNameRequired": {
+            "en": "Last name is required.",
+            "km": "សូមបញ្ចូលនាមត្រកូល។"
+        },
+        "EmailRequired": {
+            "en": "Email is required.",
+            "km": "សូមបញ្ចូលអ៊ីមែល។"
+        },
+        "EmailInvalid": {
+            "en": "Email is not valid.",
+            "km": "អ៊ីមែលមិនត្រឹមត្រូវ។"
+        },
+        "PhoneRequired": {
+            "en": "Phone number is required.",
+            "km": "សូមបញ្ចូលលេខទូរស័ព្ទ។"
+        },
+        "AddressRequired": {
+            "en": "Address is required.",
+            "km": "សូមបញ្ចូលអាសយដ្ឋាន។"
+        },
+        "CityRequired": {
+            "en": "City is required.",
+            "km": "សូមបញ្ចូលទីក្រុង។"
+        },
+        "PostalCodeRequired": {
+            "en": "Postal code is required.",
+            "km": "សូមបញ្ចូលលេខកូដប្រៃសណីយ៍។"
+        },
+        "CountryRequired": {
+            "en": "Country is required.",
+            "km": "សូមបញ្ចូលប្រទេស។"
+        }
+    }
+}

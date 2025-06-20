@@ -1,0 +1,20 @@
+.section-header {
+    display: flex;
+    align-items: center;
+    margin: 1rem 0;
+}
+
+.line {
+    flex-grow: 1;
+    height: 0.5px;
+    background-color: #1e2a28;
+    /* Dark line */
+}
+
+.text {
+    margin: 0 1rem;
+    font-size: 1.25rem;
+    font-weight: 400;
+    color: #1e2a28;
+    letter-spacing: 0.05em;
+}

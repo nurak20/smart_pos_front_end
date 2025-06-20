@@ -1,0 +1,92 @@
+/* Shimmer Animation */
+@keyframes pos-shimmer {
+    0% {
+        background-position: 100% 0;
+    }
+
+    100% {
+        background-position: -100% 0;
+    }
+}
+
+.pos-shimmer {
+    background: linear-gradient(90deg, #d2d2d2 25%, #a0a0a0 37%, #cac9c9 63%);
+    background-size: 400% 100%;
+    animation: pos-shimmer 1.4s ease infinite;
+}
+
+/* Shimmer Layout for Product Detail */
+.pos-product-detail-shimmer {
+    width: 95%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px 0;
+}
+
+.pos-product-detail-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+}
+
+/* Left Column (Images) */
+.pos-product-images-container {
+    flex: 1 1 400px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* .pos-main-image-container {
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    background: #f8f8f8;
+} */
+
+.pos-shimmer-main-image {
+    width: 100%;
+    height: 400px;
+    border-radius: 8px;
+}
+
+.pos-thumbnails-container {
+    display: flex;
+    gap: 10px;
+}
+
+.pos-shimmer-thumb {
+    width: 60px;
+    height: 60px;
+    border-radius: 4px;
+}
+
+/* Right Column (Product Info) */
+.pos-product-info-container {
+    flex: 1 1 400px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.pos-shimmer-title {
+    width: 70%;
+    height: 30px;
+    border-radius: 4px;
+    margin-bottom: 15px;
+}
+
+.pos-shimmer-text {
+    width: 90%;
+    height: 20px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+
+.pos-shimmer-button {
+    width: 50%;
+    height: 40px;
+    border-radius: 6px;
+    margin-top: 20px;
+    background: #f0f0f0;
+}

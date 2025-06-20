@@ -1,0 +1,39 @@
+/* Shimmer Animation */
+@keyframes shimmer {
+    0% {
+        background-position: -200% 0;
+    }
+
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+.shimmer {
+    animation: shimmer 1.5s infinite linear;
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    border-radius: 4px;
+}
+
+/* Shimmer Placeholder Styles */
+.shimmer-image {
+    width: 100%;
+    height: 200px;
+    /* Adjust based on your image size */
+    margin-bottom: 10px;
+}
+
+.shimmer-text {
+    width: 100%;
+    height: 16px;
+    /* Adjust based on your font size */
+    margin-bottom: 8px;
+}
+
+.shimmer-button {
+    width: 40px;
+    /* Adjust based on your button size */
+    height: 40px;
+    border-radius: 50%;
+}

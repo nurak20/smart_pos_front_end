@@ -1,0 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+.text-container {
+    display: block;
+    padding: 10px 0px;
+}
+
+.t-title {
+    color: rgb(98, 98, 98);
+
+
+}
+
+.t-value {
+    padding: 3px 0px;
+    color: #252525;
+    font-weight: 400;
+    color: #222;
+    display: inline-block;
+}
+
+p {
+    padding: 0;
+}

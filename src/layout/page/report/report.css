@@ -1,0 +1,24 @@
+.inv-card {
+    border: 1px solid white;
+}
+
+.inv-card:hover {
+    border: 1px solid rgb(255, 145, 35);
+}
+
+.j {
+    background: rgba(89, 129, 204, 0.2);
+    border: rgb(29, 132, 118);
+}
+
+.bg-silver {
+    background: rgb(240, 240, 240);
+}
+
+.hover-bg-silver:hover {
+    background: rgb(240, 240, 240);
+}
+
+.hover-line:hover {
+    text-decoration: underline;
+}

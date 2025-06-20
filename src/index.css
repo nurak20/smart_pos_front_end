@@ -1,0 +1,60 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+    /* Pink Palette */
+    --pink-1: #ff758f;
+    --pink-2: #ff3f69;
+    --pink-3: #e63946;
+    --pink-4: #ff8fab;
+    --pink-5: #ff6b81;
+
+    --font-size-xs: 0.75rem;
+    /* 12px */
+    --font-size-sm: 0.875rem;
+    /* 14px */
+    --font-size-md: 1rem;
+    /* 16px */
+    --font-size-lg: 1.125rem;
+    /* 18px */
+
+    /* Blue Palette */
+    --blue-1: #4f8ff0;
+    --blue-2: #1e3a8a;
+    --blue-3: #3a86ff;
+    --blue-4: #48cae4;
+    --blue-5: #0077b6;
+
+    /* Dark Palette */
+    --dark-1: #121212;
+    --dark-2: #232323;
+    --dark-3: #1b1b1b;
+    --dark-4: #3a3a3a;
+    --dark-5: #424242;
+
+    /* Green Palette */
+    --green-1: #48c774;
+    --green-2: #38b000;
+    --green-3: #4caf50;
+    --green-4: #2d6a4f;
+    --green-5: #81c784;
+
+    /* Extra Accents */
+    --accent-1: #ff69b4;
+    --accent-2: #00b4d8;
+    --accent-3: #ffa500;
+    --accent-4: #6a0572;
+    --accent-5: #ff006e;
+
+    --components-color: #7E485E;
+    --background-light-pink: #ECDFE4;
+    --app-border: #C294A7;
+    --components-light-color: #D7C0C9;
+    --app-dark-text: #292426;
+    --app-gray-text: #6B6165;
+    --app-background: #fcf7f9;
+    --button-light-pink: #B594A0;
+    --background-text: #E2CEE3;
+    --components-error-color: rgb(222, 48, 48);
+}

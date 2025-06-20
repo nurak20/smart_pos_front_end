@@ -1,0 +1,90 @@
+.f-label {
+    font-size: 16px;
+    color: #6a6a6a;
+    padding: 10px 0px;
+}
+
+.f-input {
+    border: none;
+    border-bottom: 1px solid #e2e2e2;
+    padding: 10px 10px;
+    transition-duration: 0.2s;
+}
+
+.f-input:focus {
+    border-bottom: 1px solid #696969;
+}
+
+.cursor-i {
+    cursor: text;
+}
+
+.btn-green {
+    background: rgb(76, 156, 39);
+    color: white;
+    transition-duration: 0.3s;
+    border: none;
+    padding: 10px 15px;
+}
+
+.btn-green:hover {
+    background: rgb(56, 117, 28);
+}
+
+.btn-red {
+    background: rgb(178, 61, 57);
+    color: white;
+    transition-duration: 0.3s;
+    border: none;
+    padding: 10px 15px;
+}
+
+.btn-red:hover {
+    background: rgb(134, 43, 40);
+}
+
+.form-header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 10px;
+}
+
+.button {
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.button.add {
+    background: rgb(170, 80, 179);
+    background: linear-gradient(0deg, rgba(170, 80, 179, 1) 0%, rgba(198, 115, 188, 1) 100%);
+}
+
+.button.add:hover {
+    background: rgb(170, 80, 179);
+    background: linear-gradient(0deg, rgb(164, 80, 172) 0%, rgb(185, 87, 174) 100%);
+}
+
+.button.cancel {
+    background: rgb(216, 44, 87);
+}
+
+.button.cancel:hover {
+
+    background: rgb(178, 29, 91);
+}
+
+.button.preview {
+    background: rgb(22, 121, 178);
+}
+
+.button.preview:hover {
+    background: rgb(28, 73, 136);
+}

@@ -1,0 +1,85 @@
+.data-grid {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+    /* border: 1px solid #dbdbdb; */
+    /* padding: 30px 0px; */
+    padding-top: 0px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+    overflow-x: auto;
+}
+
+th {
+    width: 100%;
+    padding: 15px;
+    text-align: left;
+    border: none;
+    border-bottom: 1px solid #c1c1c1;
+    /* overflow: hidden; */
+    font-size: 14px;
+    color: #636363;
+    font-weight: 400;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+td {
+    width: 100%;
+    padding: 15px;
+    text-align: left;
+    border: none;
+    border-bottom: 0.2px solid #dddddd;
+    overflow: hidden;
+    font-weight: 400;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 14px;
+}
+
+
+th {
+    font-weight: 600;
+    cursor: pointer;
+    position: relative;
+}
+
+th .header-cell {
+    display: inline-flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+th .sort-icon {
+    margin-left: 5px;
+    font-size: 10px;
+}
+
+th .resizer {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 5px;
+    height: 100%;
+    cursor: col-resize;
+    background-color: transparent;
+}
+
+th:hover .resizer {
+    background-color: #dddddd;
+}
+
+tr {
+    cursor: pointer;
+    background: white;
+    transition-duration: 0.1s;
+}
+
+tr:hover {
+    background: #f9f9f9;
+}

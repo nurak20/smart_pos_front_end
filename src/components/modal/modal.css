@@ -1,0 +1,63 @@
+/* Modal Overlay */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    background: white;
+    transition-duration: 0.2s;
+    z-index: 1000;
+    animation: fadeIn 0.1s;
+    overflow-y: auto;
+}
+
+.modal-overlay.open {
+    opacity: 1;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+}
+
+.modal-overlay.close {
+    width: 0;
+    opacity: 0;
+    height: 100%;
+    z-index: 1000;
+}
+
+/* Fade In Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+/* Slide In Animation for Opening */
+@keyframes inOpen {
+    from {
+        opacity: 0;
+        width: 0%;
+    }
+
+    to {
+        opacity: 1;
+        width: 100%;
+    }
+}
+
+/* Slide Out Animation for Closing */
+@keyframes outClose {
+    from {
+        opacity: 1;
+        width: 100%;
+    }
+
+    to {
+        opacity: 0;
+        width: 0%;
+    }
+}

@@ -1,0 +1,269 @@
+/* Navbar Container */
+.pos-navbar-container {
+  width: 100%;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background-color: var(--app-background);
+
+}
+
+.pos-navbar {
+  height: 70px;
+  width: 100%;
+}
+
+.pos-navbar-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+}
+
+/* Brand Logo Section */
+.pos-navbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.pos-navbar-logo {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pos-navbar-logo img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.pos-navbar-brand-name {
+  font-weight: 500;
+  font-size: 18px;
+  color: #333;
+}
+
+/* Menu Section */
+.pos-navbar-menu {
+  display: flex;
+  height: 100%;
+}
+
+.pos-navbar-nav {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+.pos-navbar-item {
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.pos-navbar-link {
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  color: #333;
+  text-decoration: none;
+  font-weight: 400;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  height: 100%;
+  position: relative;
+}
+
+.pos-navbar-link:hover {
+  color: #000;
+}
+
+.pos-navbar-link:after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: var(--components-color);
+  transition: width 0.3s ease;
+}
+
+.pos-navbar-link:hover:after {
+  width: 100%;
+}
+
+.pos-navbar-icon {
+  margin-right: 8px;
+  display: flex;
+  align-items: center;
+}
+
+/* Actions Section */
+.pos-navbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.pos-navbar-action-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #333;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.pos-navbar-action-item:hover {
+  color: #000;
+}
+
+/* Mobile Menu Button */
+.pos-navbar-mobile-toggle {
+  display: none;
+  cursor: pointer;
+}
+
+.pos-navbar-hamburger {
+  width: 24px;
+  height: 18px;
+  position: relative;
+  transform: rotate(0deg);
+  transition: 0.5s ease-in-out;
+}
+
+.pos-navbar-hamburger span {
+  display: block;
+  position: absolute;
+  height: 1.5px;
+  width: 100%;
+  background: var(--components-color);
+  border-radius: 9px;
+  opacity: 1;
+  left: 0;
+  transform: rotate(0deg);
+  transition: 0.25s ease-in-out;
+}
+
+.pos-navbar-hamburger span:nth-child(1) {
+  top: 0px;
+}
+
+.pos-navbar-hamburger span:nth-child(2) {
+  top: 8px;
+}
+
+.pos-navbar-hamburger span:nth-child(3) {
+  top: 16px;
+}
+
+.pos-navbar-hamburger.active span:nth-child(1) {
+  top: 8px;
+  transform: rotate(135deg);
+}
+
+.pos-navbar-hamburger.active span:nth-child(2) {
+  opacity: 0;
+  left: -60px;
+}
+
+.pos-navbar-hamburger.active span:nth-child(3) {
+  top: 8px;
+  transform: rotate(-135deg);
+}
+
+/* Mobile Menu */
+.pos-navbar-mobile-menu {
+  display: none;
+  width: 100%;
+  background-color: #fff;
+  position: absolute;
+  top: 70px;
+  left: 0;
+  padding: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s ease;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+
+.pos-navbar-mobile-menu.active {
+  max-height: 500px;
+  /* padding: 15px 0; */
+}
+
+.pos-navbar-mobile-nav {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.pos-navbar-mobile-item {
+  padding: 0;
+}
+
+.pos-navbar-mobile-link {
+  display: flex;
+  align-items: center;
+  padding: 12px 20px;
+  color: #333;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 16px;
+  transition: all 0.3s ease;
+}
+
+.pos-navbar-mobile-link:hover {
+  background-color: #f5f5f5;
+  color: #000;
+}
+
+.pos-navbar-mobile-icon {
+  margin-right: 12px;
+  display: flex;
+  align-items: center;
+}
+
+/* Media Queries */
+@media (max-width: 992px) {
+  .pos-navbar-menu {
+    display: none;
+  }
+
+  .pos-navbar-mobile-toggle {
+    display: block;
+  }
+
+  .pos-navbar-mobile-menu {
+    display: block;
+  }
+
+  .pos-navbar-actions {
+    gap: 12px;
+  }
+}
+
+@media (max-width: 576px) {
+  .pos-navbar-brand-name {
+    display: none;
+  }
+
+  .pos-navbar-actions {
+    gap: 8px;
+  }
+
+  .pos-navbar-content {
+    padding: 0 12px;
+  }
+}

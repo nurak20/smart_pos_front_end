@@ -1,0 +1,171 @@
+.sticky {
+    position: sticky;
+    top: 0;
+}
+
+table {
+    font-size: 12px;
+}
+
+td {
+    vertical-align: middle;
+
+}
+
+.text-title {
+    width: 90%;
+    white-space: nowrap;
+    /* Prevent text from wrapping to the next line */
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.header-btn {
+    border: none;
+    padding: 0px 50px;
+    background: rgb(170, 80, 179);
+    background: linear-gradient(0deg, rgba(170, 80, 179, 1) 0%, rgba(198, 115, 188, 1) 100%);
+    color: white;
+}
+
+.header-btn:hover {
+    background: rgb(151, 91, 203);
+    color: white;
+}
+
+/* Container */
+.list-header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 10px 20px;
+    padding-left: 0px;
+    padding-right: 5px;
+    background-color: #fff;
+    border-radius: 8px;
+}
+
+/* Left Section */
+.list-header-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Right Section */
+.list-header-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Buttons */
+.list-header-button {
+    display: flex;
+    align-items: center;
+    padding: 10px 12px;
+    border: none;
+    border-radius: 4px;
+    font-size: 12px;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* Button Colors */
+.list-header-button.add-new {
+    background: rgb(170, 80, 179);
+    background: linear-gradient(0deg, rgba(170, 80, 179, 1) 0%, rgba(198, 115, 188, 1) 100%);
+}
+
+.list-header-button.add-new:hover {
+    background: rgb(170, 80, 179);
+    background: linear-gradient(0deg, rgb(164, 80, 172) 0%, rgb(185, 87, 174) 100%);
+}
+
+.list-header-button.print {
+    background-color: #3071a5;
+}
+
+.list-header-button.print:hover {
+    background-color: #1976d2;
+}
+
+.list-header-button.export {
+    background-color: #d79043;
+}
+
+.list-header-button.export:hover {
+    background-color: #ecac18;
+}
+
+.list-header-button.filter {
+    background-color: #de5f38;
+}
+
+.list-header-button.filter:hover {
+    background-color: #e64a19;
+}
+
+/* Icons */
+.list-header-icon {
+    margin-right: 6px;
+    font-size: 16px;
+}
+
+.search-icon {
+    color: #999;
+}
+
+/* Search Input */
+.list-header-search {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 4px 8px;
+    background-color: #f9f9f9;
+}
+
+.list-header-input {
+    border: none;
+    outline: none;
+    background-color: transparent;
+}
+
+
+.list-header-button.list {
+    background-color: #2a90c0;
+}
+
+.list-header-button.list:hover {
+    background-color: #286c8b;
+}
+
+.animation-opacity {
+    animation: opa 0.3s;
+}
+
+.button.next,
+.button.previous {
+    padding-left: 10px;
+    padding-right: 10px;
+    border: 0.4px solid rgb(98, 98, 98);
+    background: white;
+    color: rgb(48, 48, 48);
+}
+
+@keyframes opa {
+    from {
+        opacity: 0.4;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.baaa {
+    background-color: rgb(247, 229, 255);
+}

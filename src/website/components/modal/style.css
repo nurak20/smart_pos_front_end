@@ -1,0 +1,38 @@
+.modal.fade.show.d-block {
+    backdrop-filter: blur(5px);
+    z-index: 1055;
+}
+
+.payment-content {
+    animation: fadeInUp 0.5s ease forwards;
+    opacity: 0;
+}
+
+.dialog-content {
+    animation: dialog 0.2s ease forwards;
+    opacity: 0;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes dialog {
+    0% {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}

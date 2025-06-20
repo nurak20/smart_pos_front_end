@@ -1,0 +1,96 @@
+.combo-box {
+    position: relative;
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.combo-box-input {
+    padding: 16px 16px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    border: 1px solid rgb(153, 153, 153);
+    border-radius: 7px;
+
+}
+
+.combo-box-input:hover {
+    border: 1px solid rgb(245, 187, 81);
+}
+
+/* .combo-box-input:focus {
+    outline: none;
+    border: 1px solid rgb(245, 187, 81);
+    box-shadow: 0 0 12px rgba(255, 165, 0, 0.6);
+} */
+
+.combo-box-options {
+    position: absolute;
+    top: calc(100% + 5px);
+    width: 100%;
+    margin: 0;
+    padding: 8px 0;
+    list-style: none;
+    background: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+    max-height: 200px;
+    overflow-y: auto;
+    /* transition: all 1s ease; */
+}
+
+.combo-box-option {
+    padding: 10px 16px;
+    color: #555;
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.option-purple {
+    background: none;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.option-purple:hover {
+    border-bottom: 1px solid rgba(64, 221, 17, 0.5);
+}
+
+.arrow {
+    background: none;
+    border: none;
+    font-size: 10px;
+    color: #777;
+    transition: transform 0.3s ease;
+}
+
+.combo-box-input:focus .arrow {
+    color: #0056b3;
+}
+
+.combo-box-input .arrow.rotate {
+    transform: rotate(180deg);
+}
+
+@media (max-width: 768px) {
+    .combo-box {
+        max-width: 100%;
+    }
+
+    .combo-box-input {
+        font-size: 14px;
+        padding: 10px 14px;
+    }
+
+    .combo-box-option {
+        font-size: 14px;
+        padding: 8px 12px;
+    }
+}

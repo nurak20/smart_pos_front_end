@@ -1,0 +1,259 @@
+/* style.css */
+
+.pos-product-detail-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.pos-product-layout {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+}
+
+/* Image Section */
+.pos-product-image-container {
+    flex: 1;
+    min-width: 300px;
+    overflow: hidden;
+    position: relative;
+    background-color: #f5f5f5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.pos-product-image {
+    object-fit: contain;
+    max-width: 100%;
+    height: 500px;
+    background-color: white;
+    display: block;
+}
+
+.pos-image-navigation {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    display: flex;
+}
+
+.pos-nav-button {
+    width: 40px;
+    height: 40px;
+    border-radius: 50px;
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid #e0e0e0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 18px;
+    color: #808080;
+    margin-right: 10px;
+}
+
+.pos-prev {
+    border-radius: 50%;
+}
+
+.pos-next {
+    background-color: #e6f4ff;
+    color: #4dabf7;
+}
+
+/* Product Info Section */
+.pos-product-info {
+    flex: 1;
+    min-width: 300px;
+}
+
+.pos-product-category {
+    color: #666;
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.pos-product-title {
+    font-size: 34px;
+    font-weight: bold;
+    margin: 0 0 15px 0;
+    color: #000;
+}
+
+.pos-product-rating {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.pos-stars {
+    display: flex;
+    margin-right: 10px;
+    font-size: 20px;
+}
+
+.pos-star-filled {
+    color: var(--components-color);
+}
+
+.pos-star-empty {
+    color: #ccc;
+}
+
+.pos-review-count {
+    color: #666;
+    margin-right: auto;
+}
+
+.pos-social-icons {
+    display: flex;
+    gap: 15px;
+}
+
+.pos-social-icon {
+    color: #666;
+    font-size: 18px;
+}
+
+.pos-product-description {
+    font-size: 16px;
+    line-height: 1.5;
+    color: #555;
+    margin-bottom: 20px;
+}
+
+.pos-product-options {
+    margin-bottom: 20px;
+}
+
+.pos-size-selector {
+    display: flex;
+    align-items: center;
+}
+
+.pos-option-label {
+    width: 80px;
+    color: #333;
+}
+
+.pos-select-wrapper {
+    position: relative;
+    width: 150px;
+}
+
+.pos-select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+    appearance: none;
+    font-size: 16px;
+}
+
+.pos-select-wrapper::after {
+    content: "▼";
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    font-size: 10px;
+    color: #999;
+}
+
+.pos-divider {
+    border-top: 1px solid #eee;
+    margin: 20px 0;
+}
+
+.pos-product-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.pos-product-price {
+    font-size: 28px;
+    font-weight: 400;
+    color: var(--app-gray-text);
+}
+
+.pos-action-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.pos-add-to-cart-btn {
+    background-color: var(--components-color);
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+.pos-wishlist-btn {
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff3f4;
+    border: 1px solid #8e585e;
+    color: #8e585e;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 18px;
+}
+
+.pos-product-thumbnails {
+    object-fit: contain;
+    max-width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    height: 100px;
+
+}
+
+.btn-count-card {
+    background-color: var(--background-text);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    color: var(--app-dark-text);
+
+}
+
+.count-number {
+    color: var(--app-dark-text);
+    font-size: 20px;
+}
+
+.image-container {
+    width: 100%;
+    max-width: 500px;
+    position: relative;
+    overflow: hidden;
+}
+
+.image-container::before {
+    content: '';
+    display: block;
+    padding-top: 100%;
+    /* 1:1 */
+}
+
+.image-container img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}

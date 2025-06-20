@@ -1,0 +1,79 @@
+.calculator-container {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.calculator-display {
+    width: 100%;
+    text-align: right;
+    margin-bottom: 15px;
+}
+
+.calculator-display input {
+    width: 100%;
+    padding: 15px;
+    font-size: 1.5rem;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    outline: none;
+}
+
+.calculator-buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    width: 100%;
+}
+
+.button.key-number {
+    background-color: rgb(80, 69, 114);
+    color: white;
+    font-size: 1.5rem;
+    padding: 20px;
+    border: none;
+    /* border-radius: 8px; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    height: 80px;
+    /* Fixed height */
+    transition: all 0.2s ease;
+}
+
+.button.key-number:active {
+    transform: scale(0.95);
+    /* Button presses effect */
+}
+
+.button.key-number.large {
+    grid-column: span 2;
+    /* To make a button span two columns */
+}
+
+.button.key-number.operator {
+    background-color: orange;
+}
+
+/* Responsive styles for larger screens */
+@media (max-width: 768px) {
+    .button.key-number {
+        font-size: 1.2rem;
+        height: 60px;
+    }
+}
+
+@media (max-width: 480px) {
+    .button.key-number {
+        font-size: 1rem;
+        height: 50px;
+    }
+
+    .calculator-container {
+        padding: 5px;
+    }
+}
