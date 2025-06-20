@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import "./ComboBox.css";
 
 const ComboBox = ({
   options,

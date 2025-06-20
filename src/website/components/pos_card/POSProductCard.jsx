@@ -48,7 +48,6 @@ const ProductCard = ({ product, sx = {}, className = '', onClick = () => { } }) 
                         display: 'block',
                         width: '100%',         // fill container
                         height: 'auto',        // keep aspect ratio
-                        height: 200,        // never exceed 200px high
                         objectFit: 'contain'   // show the whole image
                     }}
                 />

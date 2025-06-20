@@ -1,5 +1,4 @@
 import React from "react";
-import "./ProductCard.css";
 import { hostName } from "../../api/host";
 import { Paper } from "@mui/material";
 

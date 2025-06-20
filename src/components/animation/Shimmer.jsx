@@ -307,11 +307,6 @@ const ShimmerDemo = () => {
                 </div>
             </section>
 
-            {/* Form Fields */}
-            <section style={{ marginBottom: '40px' }}>
-                <h3 style={{ marginBottom: '20px', color: '#374151' }}>Form Field Shimmers</h3>
-                <FormFieldsShimmer count={4} variant="wave" layout="grid" />
-            </section>
 
             {/* Card Layout */}
             <section style={{ marginBottom: '40px' }}>

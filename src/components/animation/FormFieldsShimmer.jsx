@@ -1,5 +1,5 @@
 import React from 'react';
-import './Shimmer.css';
+
 
 const Shimmer = ({ width = '100%', height = '60px', borderRadius = '4px', className = '' }) => {
     return (

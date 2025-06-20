@@ -1,5 +1,4 @@
 import React from 'react';
-import './shimmer.css';
 import { POSSize } from '../../extension/Extension';
 const Shimmer = () => {
     const heightImage = POSSize({

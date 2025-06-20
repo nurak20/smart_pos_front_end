@@ -3,8 +3,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@mui/material';
 import { Add, Close } from '@mui/icons-material';
 import { StyleColors, Translate } from '../../website/extension/Extension';
-import Shimmer from '../animation/FormFieldsShimmer';
-import { km } from 'date-fns/locale';
 
 const PanelSection = ({
     title,
@@ -75,10 +73,7 @@ const PanelSection = ({
             {/* Table Section with Loading State */}
             <div className="p-4">
                 {isLoading ? (
-                    <Shimmer
-                        count={shimmerCount}
-                        className="h-12 rounded-md"
-                    />
+                    <>Nice</>
                 ) : (
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}

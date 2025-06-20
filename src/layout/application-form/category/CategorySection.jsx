@@ -7,7 +7,6 @@ import { Add, Close } from '@mui/icons-material';
 import CategoryCreationForm from './CategoryCreationForm';
 import CategoriesTable from './CategoriesTable';
 import website from '../../../website/json/website.json';
-import Shimmer from '../../../components/animation/FormFieldsShimmer';
 import { FaListAlt } from 'react-icons/fa';
 import PanelSection from '../../../components/panel/PanelForm';
 

@@ -78,7 +78,8 @@ const ProfileMiddleWare = () => {
 export const POSRoute = {
     home: '/',
     allProducts: '/products',
-    productDetail: '/product-details',
+    productDetail: '/product/:id',  // Keep this one as the dynamic route
+    productDetailStatic: '/product-details',  // Rename the static route
     bestSellers: '/best-sellers',
     newArrivals: '/new-arrivals',
     sale: '/sale',
@@ -99,13 +100,11 @@ export const POSRoute = {
     checkout: '/checkout',
     orderHistory: '/order-history',
     wishlist: '/wishlist',
-    productDetail: '/product/:id',
     search: '/search',
     location: '/location',
     notFound: '*',
     manageProduct: "/manage-product",
     manageOrder: "/manage-order",
     manageCategory: "/manage-category",
-
     manageWarehouse: "/manage-warehouse",
 };

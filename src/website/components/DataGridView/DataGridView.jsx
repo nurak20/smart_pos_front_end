@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import { useTable, useSortBy, useGlobalFilter, usePagination } from "react-table";
 import * as XLSX from "xlsx";
 import TablePagination from "@mui/material/TablePagination";
-import './datagrid.css';
-
 const DataGridView = ({ columns, data }) => {
     const [selectedRows, setSelectedRows] = useState({});
 

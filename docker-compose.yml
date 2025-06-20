@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  react-app:
+    build:
+      context: .
+      dockerfile: Dockerfile # Specifies the Dockerfile to use
+    ports:
+      - "3111:3000" # Map port 3000 on the host to port 3000 on the container
+    volumes:
+      - .:/app # Mount the current directory as a volume in the container for live code updates
+    environment:
+      - NODE_ENV=development # You can change this based on your environment (e.g., production)

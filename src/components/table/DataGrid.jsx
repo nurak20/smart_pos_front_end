@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./DataGrid.css";
+
 import { IoIosArrowRoundDown, IoIosArrowRoundUp } from "react-icons/io";
 
 // DataGrid Wrapper

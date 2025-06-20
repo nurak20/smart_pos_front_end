@@ -4,12 +4,6 @@ import ProductCreationForm from './ProductCreationForm'
 import ProductTable from './ProductTable'
 import website from '../../../website/json/website.json';
 import { IoMdAddCircleOutline } from 'react-icons/io';
-import { Translate } from '../../../website/extension/Extension';
-import { Button } from '@mui/material';
-import { Add, AddIcCall, Close, NewReleases } from '@mui/icons-material';
-import { ShimmerTable } from '../../../website/components/animation/Shimmer';
-import ShimmerDemo, { ButtonShimmer, FormFieldsShimmer } from '../../../components/animation/Shimmer';
-import Shimmer from '../../../components/animation/FormFieldsShimmer';
 import PanelSection from '../../../components/panel/PanelForm';
 const ManageProuct = () => {
     const [isLoading, setIsLoading] = useState(true);

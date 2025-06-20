@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box } from '@mui/material';
-import './shimmer.css';
+
 
 export const ShimmerTable = ({ rowCount = 5, columnCount = 6 }) => {
     // Generate unique keys for better React reconciliation
