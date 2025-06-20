@@ -6,8 +6,9 @@ services:
       context: .
       dockerfile: Dockerfile # Specifies the Dockerfile to use
     ports:
-      - "3111:3000" # Map port 3000 on the host to port 3000 on the container
+      - "3111:3000" # Map port 3000 on the container to port 3111 on the host
     volumes:
       - .:/app # Mount the current directory as a volume in the container for live code updates
     environment:
-      - NODE_ENV=development # You can change this based on your environment (e.g., production)
+      - NODE_ENV=development # Change to 'production' in a production environment
+    command: [ "npm", "run", "dev" ] # Use 'dev' for Vite development server
