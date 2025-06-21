@@ -1,5 +1,5 @@
-# Use specific Node.js version (v20.19.0) as a base
-FROM node:20.19.0-alpine
+# Use standard Node.js image instead of Alpine
+FROM node:20
 
 # Set the working directory in the container
 WORKDIR /app
@@ -16,8 +16,8 @@ COPY . .
 # Build the React app for production
 RUN npm run build
 
-# Expose the port the app will run on
+# Expose the port the app will run on (matching vite config)
 EXPOSE 3000
 
-# Start the app
-CMD ["npm", "start"]
+# Start the app with host flag for Docker
+CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0"]

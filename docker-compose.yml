@@ -2,13 +2,15 @@ version: '3.8'
 
 services:
   react-app:
+    platform: linux/amd64
     build:
       context: .
-      dockerfile: Dockerfile # Specifies the Dockerfile to use
+      dockerfile: Dockerfile
     ports:
-      - "3111:3000" # Map port 3000 on the container to port 3111 on the host
+      - "3200:3000" # Changed to match vite config port 3000
     volumes:
-      - .:/app # Mount the current directory as a volume in the container for live code updates
+      - .:/app
+      - /app/node_modules
     environment:
-      - NODE_ENV=development # Change to 'production' in a production environment
-    command: [ "npm", "run", "dev" ] # Use 'dev' for Vite development server
+      - NODE_ENV=development
+    command: [ "npm", "run", "dev", "--", "--host", "0.0.0.0" ]
