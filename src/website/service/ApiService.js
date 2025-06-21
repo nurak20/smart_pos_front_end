@@ -21,9 +21,11 @@ export const API_ENDPOINT = {
 };
 
 // API Base URLs
-export const API_BASE_URL = process.env.NODE_ENV === 'production'
-    ? 'http://62.146.237.218:3000/api/'
-    : 'http://localhost:2000/api/';
+// export const API_BASE_URL = process.env.NODE_ENV === 'production'
+//     ? 'http://62.146.237.218:3000/api/'
+//     : 'http://localhost:2000/api/';
+
+export const API_BASE_URL = 'http://62.146.237.218:3000/api/';
 
 
 // Create axios instance with interceptors

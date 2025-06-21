@@ -116,6 +116,7 @@ apiClient.interceptors.response.use(
 
 // Enhanced API functions with better error handling
 export const axiosGET = async (endpoint, params = {}) => {
+
     try {
         const response = await apiClient.get(endpoint, { params });
         return response;
