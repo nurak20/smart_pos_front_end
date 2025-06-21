@@ -63,9 +63,11 @@ const TextField = React.forwardRef(({
 
     const Prefix = prefixIcon && IconPack[prefixIcon] ? IconPack[prefixIcon] : null;
     const Suffix = suffixIcon && IconPack[suffixIcon] ? IconPack[suffixIcon] : null;
+
     const PasswordToggleIconComp = isPassword
         ? IconPack[showPassword ? 'IoMdEye' : 'IoMdEyeOff']
         : null;
+
 
 
     return (
@@ -110,11 +112,12 @@ const TextField = React.forwardRef(({
                     {...inputProps}
                     {...rest}
                 />
-                {Suffix && type != 'password' && (
+                {Suffix && !isPassword && (
                     <span className="" >
                         <Suffix size={22} color={StyleColors.appGrayText} />
                     </span>
                 )}
+
                 {PasswordToggleIconComp && (
                     <span
                         className="pos-field-icon"

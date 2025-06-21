@@ -12,12 +12,6 @@ services:
       - /app/node_modules
     environment:
       - NODE_ENV=development
-<<<<<<< HEAD
-    init: true
-    tty: true
-    stdin_open: true
-=======
       - CHOKIDAR_USEPOLLING=true # Enables file watching in Docker
       - WATCHPACK_POLLING=true # Additional polling for file changes
     command: [ "npm", "run", "dev", "--", "--host", "0.0.0.0" ]
->>>>>>> 0d03e24614e987df2d55403661f59d3fca9d0843

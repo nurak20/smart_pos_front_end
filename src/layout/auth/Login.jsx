@@ -143,7 +143,7 @@ export default function Login() {
                         value={values.password}
                         onChange={handleChange}
                         prefixIcon="IoIosLock"
-                        suffixIcon="IoMdEye"
+                        typeIcon="io"
                         error={errors.password}
                         required
                         autoComplete="current-password"
