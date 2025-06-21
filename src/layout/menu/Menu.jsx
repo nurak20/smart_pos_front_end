@@ -26,7 +26,7 @@ const MenuItem = ({ to, Icon, label }) => {
         >
             <div className='start gap-3'>
                 <div className='fs-5'><Icon /></div>
-                <div className=''>{label}</div>
+                <div className='hidden sm:hidden lg:block'>{label}</div>
 
             </div>
         </NavLink>
@@ -40,12 +40,12 @@ const MenuTitle = ({ title, children, expanded, onToggle }) => {
     return (
         <div className="menu-title-container">
             <div className="menu-title ps-4 py-2" onClick={onToggle}>
-                <span>{title}</span>
+                <span className='hidden sm:hidden lg:block'>{title}</span>
                 <span className={`menu-toggle-icon ${expanded ? "expanded" : ""}`}>
                     {expanded ? <HiOutlineMinus /> : <HiOutlinePlus />}
                 </span>
             </div>
-            <div className={`submenu ${expanded ? "expanded" : "collapsed"}`}>
+            <div className={` submenu ${expanded ? "expanded" : "collapsed"}`}>
                 {children}
             </div>
         </div>
@@ -61,30 +61,33 @@ const Menu = () => {
     const [expandedSections, setExpandedSections] = useState({});
 
     const toggleSection = (title) => {
+        console.log('Welcome to React');
+        console.log(title);
         setExpandedSections((prev) => ({
             ...prev,
             [title]: !prev[title],
         }));
     };
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setExpandedSections((prev) => ({
+                ...prev,
+                'Application': true,  // Open 'Application' section on initial load
+            })); // This will run after the specified delay
+        }, 300); // 1000 ms delay (1 second)
+
+        // Cleanup the timer if the component unmounts before the timeout completes
+        return () => clearTimeout(timer);
+    }, []);
 
     // Configuration for menu items
     const menuConfig = [
         {
             title: 'Application', items: [
                 {
-                    to: '/',
-                    Icon: TbDashboard,
-                    label: Translate({ km: "ផ្ទាំងគ្រប់គ្រង", en: "Dashboard" })
-                },
-                {
                     to: `${POSRoute.manageProduct}`,
                     Icon: HiOutlineBuildingLibrary,
                     label: Translate({ km: "គ្រប់គ្រងទំនិញ", en: "Product Management" })
-                },
-                {
-                    to: `${POSRoute.manageOrder}`,
-                    Icon: MdOutlineBorderOuter,
-                    label: Translate({ km: "គ្រប់គ្រងការកម្មង់", en: "Order Management" })
                 },
                 {
                     to: `${POSRoute.manageCategory}`,
@@ -170,7 +173,7 @@ const Menu = () => {
     }, []);
     return (
         <div
-            className='h-100 menu'
+            className='h-100 menu bg-white rounded-[10px]'
             style={{
                 color: StyleColors.dark1Bg,
                 background: StyleColors.appBackground,

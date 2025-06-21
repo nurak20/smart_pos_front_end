@@ -143,23 +143,17 @@ const OrderTable = () => {
     }
 
     return (
-        <Box sx={{ height: '100%', width: '100%', mt: 2 }}>
-            <Typography variant="h5" gutterBottom sx={{ mb: 2 }}>
-                Order Management
-            </Typography>
+        <DataGrid
+            rows={orders}
+            columns={columns}
+            pageSize={pageSize}
+            onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
+            rowsPerPageOptions={[5, 10, 20, 50]}
+            pagination
+            disableSelectionOnClick
+            getRowId={(row) => row.order_id}
 
-            <DataGrid
-                rows={orders}
-                columns={columns}
-                pageSize={pageSize}
-                onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
-                rowsPerPageOptions={[5, 10, 20, 50]}
-                pagination
-                disableSelectionOnClick
-                getRowId={(row) => row.order_id}
-
-            />
-        </Box>
+        />
     );
 };
 

@@ -103,8 +103,8 @@ export const POSRoute = {
     search: '/search',
     location: '/location',
     notFound: '*',
-    manageProduct: "/manage-product",
-    manageOrder: "/manage-order",
-    manageCategory: "/manage-category",
-    manageWarehouse: "/manage-warehouse",
+    manageProduct: "product",
+    manageOrder: "manage-order",
+    manageCategory: "category",
+    manageWarehouse: "warehouse",
 };

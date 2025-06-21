@@ -11,13 +11,11 @@ import AppAdmin from "../AppAdmin";
 export const AdminRoutes = () => {
     console.log("AdminRoutes");
     return (
-        <Routes>
-            <Route element={<ProtectedRoute requireAdmin={true} />}>
-                <Route path={POSRoute.home} element={<Dashboard UserName={'Nurak Oeurn'} />} />
-                <Route path={POSRoute.manageProduct} element={<ManageProduct />} />
-                <Route path={POSRoute.manageOrder} element={<ManageOrder />} />
-                <Route path={POSRoute.manageCategory} element={<CategorySection />} />
-            </Route>
+        <Routes element={<ProtectedRoute requireAdmin={true} />}>
+            <Route path={POSRoute.home} element={<Dashboard UserName={'Nurak Oeurn'} />} />
+            <Route path={POSRoute.manageProduct} element={<ManageProduct />} />
+            <Route path={POSRoute.manageOrder} element={<ManageOrder />} />
+            <Route path={POSRoute.manageCategory} element={<CategorySection />} />
         </Routes>
     );
 };

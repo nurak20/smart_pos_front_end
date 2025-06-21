@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@mui/material';
 import { Add, Close } from '@mui/icons-material';
 import { StyleColors, Translate } from '../../website/extension/Extension';
-
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
+import SkeletonGrid from './ShimmerAnimate';
 const PanelSection = ({
     title,
     titleIcon: TitleIcon,
@@ -17,9 +19,19 @@ const PanelSection = ({
     const [showForm, setShowForm] = useState(false);
 
     const toggleForm = () => setShowForm(!showForm);
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            if (isLoading) {
+                toggleForm();
+            } // This will run after the specified delay
+        }, 800); // 1000 ms delay (1 second)
+
+        // Cleanup the timer if the component unmounts before the timeout completes
+        return () => clearTimeout(timer);
+    }, [isLoading]);
 
     return (
-        <div className="bg-white">
+        <div className="bg-white rounded-[10px] shadow-md`">
             {/* Header Section */}
             <div className="flex items-center justify-between p-4 border-b">
                 <div className="flex items-center gap-3">
@@ -72,8 +84,16 @@ const PanelSection = ({
 
             {/* Table Section with Loading State */}
             <div className="p-4">
-                {isLoading ? (
-                    <>Nice</>
+                {isLoading && !showForm ? (
+                    <>
+                        <div className='d-block'>
+                            <SkeletonGrid gap={10} numCols={3} numRows={4} height={50} />
+                            <div className='end py-3'>
+                                <Skeleton height={50} width={150} />
+                            </div>
+                            <SkeletonGrid gap={5} numCols={5} numRows={5} height={60} />
+                        </div>
+                    </>
                 ) : (
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
