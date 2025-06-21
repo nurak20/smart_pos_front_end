@@ -21,6 +21,10 @@
     margin: 0px 4px;
     font-weight: 400;
     margin-bottom: 10px;
+    border-radius: 10px;
+    border: 0.5px solid rgb(255, 235, 242);
+    background-color: var(--app-background);
+    border-radius: 10px;
 }
 
 .active-link:hover {
@@ -42,11 +46,16 @@
     margin: 0px 4px;
     font-weight: 400;
     margin-bottom: 10px;
+    border-radius: 10px;
+    border: 0.5px solid white;
 
 }
 
 .menu-item:hover {
     color: rgb(0, 0, 0);
+    border-radius: 10px;
+    background-color: var(--app-background);
+    border: 0.5px solid rgb(255, 235, 242);
 }
 
 .menu-title {
