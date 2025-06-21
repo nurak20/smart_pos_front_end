@@ -13,9 +13,6 @@ RUN npm install
 # Copy the rest of the application code into the container
 COPY . .
 
-# Build the React app for production
-RUN npm run build
-
 # Expose the port the app will run on (matching vite config)
 EXPOSE 3000
 
