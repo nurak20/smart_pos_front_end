@@ -153,6 +153,7 @@ export default function Login() {
                         style={{
                             background: StyleColors.componentsColor,
                             borderRadius: '10px',
+                            color: "white",
                         }}
                         type="submit"
                         className="pos-button pos-button--primary w-100 py-3 my-3"
