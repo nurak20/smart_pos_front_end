@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import { useNavigate } from 'react-router-dom';
 import {
+    alpha,
+    Avatar,
     Box,
     Button,
     CircularProgress,
@@ -11,18 +13,19 @@ import {
     DialogContentText,
     DialogTitle,
     Menu,
+    Paper,
     Switch,
     Typography,
     useMediaQuery,
     useTheme
 } from '@mui/material';
 import { POS_GET, POS_POST, POS_PUT, POS_DELETE } from '../../../website/service/ApiService';
-import { EditIcon, MoreVerticalIcon, Trash2Icon } from 'lucide-react';
+import { Calendar, EditIcon, MoreVerticalIcon, Trash2Icon } from 'lucide-react';
 import { StyleColors } from '../../../website/extension/Extension';
 import MenuItem from '@mui/material/MenuItem';
 import TextField from '../../../website/components/text_field/POSTextField';
 
-const CategoriesTable = () => {
+const CategoriesTable = ({ refresh }) => {
     const [categories, setCategories] = useState([]);
     const [loading, setLoading] = useState(true);
     const [pageSize, setPageSize] = useState(10);
@@ -130,7 +133,18 @@ const CategoriesTable = () => {
 
     useEffect(() => {
         fetchCategories();
-    }, []);
+    }, [refresh]);
+
+    const formatDate = (dateString) => {
+        if (!dateString) return '-';
+        return new Intl.DateTimeFormat('en-US', {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+        }).format(new Date(dateString));
+    };
 
     const columns = [
         {
@@ -140,10 +154,11 @@ const CategoriesTable = () => {
             renderCell: (params) => (
                 <div style={{ display: 'flex', alignItems: 'center' }}>
                     {params.row.image && (
-                        <img
+                        <Avatar
+                            className='p-2 shadow-md'
                             src={params.row.image}
                             alt={params.row.name}
-                            style={{ width: 40, height: 40, borderRadius: 4, marginRight: 10 }}
+                            style={{ width: 40, height: 40, marginRight: 10 }}
                         />
                     )}
                     {params.value}
@@ -155,9 +170,11 @@ const CategoriesTable = () => {
             headerName: 'Description',
             flex: 1.5,
             renderCell: (params) => (
-                <Typography variant="body2" noWrap>
-                    {params.value || '-'}
-                </Typography>
+                <Box className='start h-100'>
+                    <Typography variant="body2" noWrap>
+                        {params.value || '-'}
+                    </Typography>
+                </Box>
             )
         },
         {
@@ -176,7 +193,14 @@ const CategoriesTable = () => {
             field: 'created_at',
             headerName: 'Created At',
             flex: 0.8,
-            valueFormatter: (params) => new Date(params.value).toLocaleDateString()
+            renderCell: (params) => (
+                <Box height='100%' sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                    <Calendar size={16} color={theme.palette.text.secondary} />
+                    <Typography variant="body2" color="text.secondary">
+                        {formatDate(params.value)}
+                    </Typography>
+                </Box>
+            )
         },
         {
             field: 'action',
@@ -232,19 +256,55 @@ const CategoriesTable = () => {
     }
 
     return (
-        <div>
-            <DataGrid
-                className='p-2'
-                sx={{ maxHeight: 992 }}
-                rows={categories}
-                columns={columns}
-                pageSize={pageSize}
-                onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
-                rowsPerPageOptions={[5, 10, 20, 50]}
-                pagination
-                disableSelectionOnClick
-                getRowId={(row) => row.id}
-            />
+        <div className='overflow-x-auto'>
+            <Box sx={{ minWidth: 992 }}>
+                <DataGrid
+
+                    sx={{
+                        border: '0.5px solid rgba(189, 189, 189, 0.9)',
+                        '& .MuiDataGrid-columnHeaders': {
+                            backgroundColor: alpha(theme.palette.primary.main, 0.05),
+                            borderBottom: `1px solid ${alpha(theme.palette.primary.main, 0.1)}`,
+                            borderRadius: '16px 16px 0 0',
+                            '& .MuiDataGrid-columnHeader': {
+                                fontWeight: 700,
+                                fontSize: '0.875rem',
+                                color: theme.palette.text.primary,
+                                '&:focus': {
+                                    outline: 'none'
+                                }
+                            }
+                        },
+                        '& .MuiDataGrid-cell': {
+
+                            '&:focus': {
+                                outline: 'none'
+                            }
+                        },
+                        '& .MuiDataGrid-row': {
+
+                            cursor: 'pointer',
+                            transition: 'all 0.2s ease-in-out',
+                            '&:hover': {
+                                backgroundColor: alpha(theme.palette.primary.main, 0.02),
+
+                            },
+                            '&:nth-of-type(even)': {
+                                backgroundColor: alpha(theme.palette.action.hover, 0.02)
+                            }
+                        },
+
+                    }}
+                    rows={categories}
+                    columns={columns}
+                    pageSize={pageSize}
+                    onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
+                    rowsPerPageOptions={[5, 10, 20, 50]}
+                    pagination
+                    disableSelectionOnClick
+                    getRowId={(row) => row.id}
+                />
+            </Box>
 
             {/* Edit Category Dialog */}
             <Dialog open={editDialogOpen} onClose={handleEditDialogClose} fullScreen={fullScreen}>

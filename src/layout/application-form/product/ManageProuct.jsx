@@ -5,6 +5,7 @@ import ProductTable from './ProductTable'
 import website from '../../../website/json/website.json';
 import { IoMdAddCircleOutline } from 'react-icons/io';
 import PanelSection from '../../../components/panel/PanelForm';
+import { Translate } from '../../../website/extension/Extension';
 const ManageProuct = () => {
     const [isLoading, setIsLoading] = useState(true);
 
@@ -16,13 +17,13 @@ const ManageProuct = () => {
 
     return (
         <PanelSection
-            title={website.Label.ManageProducts}
+            title={{ km: "គ្រប់គ្រងផលិតផល", en: "Manage Product" }}
             titleIcon={IoMdAddCircleOutline}
             formComponent={ProductCreationForm}
             tableComponent={ProductTable}
             addButtonText={website.Label.AddProduct}
             isLoading={isLoading}
-            onFormSuccess={() => console.log('Product created successfully!')}
+
         />
     );
 }

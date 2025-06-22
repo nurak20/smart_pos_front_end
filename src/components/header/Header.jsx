@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import {
     Button,
     Avatar,
@@ -13,7 +14,11 @@ import {
     List,
     ListItem,
     ListItemIcon,
-    ListItemText
+    ListItemText,
+    Slide,
+    ListItemAvatar,
+    ListItemButton,
+    Paper
 } from '@mui/material';
 import {
     IoChatbubbleEllipsesOutline,
@@ -27,9 +32,18 @@ import { StyleColors } from '../../website/extension/Extension';
 import LanguageSwitcher from '../../website/languages/LanguageSwitcher';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../layout/auth/AuthContext';
+import { ImageIcon, WorkflowIcon } from 'lucide-react';
+import { POS_GET } from '../../website/service/ApiService';
 
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+    return <Slide direction="up" ref={ref} {...props} timeout={{ enter: 250, exit: 150 }}
+        easing={{ enter: 'ease-out', exit: 'ease-in' }}
+        appear />;
+});
 const Header = () => {
     const [dialogOpen, setDialogOpen] = useState(false);
+    const [isLogoutDialogOpen, setIsLogoutDialogOpen] = useState(false);
     const { logout } = useAuth();
 
     const handleAvatarClick = () => {
@@ -50,6 +64,16 @@ const Header = () => {
         { icon: <IoLogOutOutline size={24} />, text: 'Logout', action: () => logout() },
     ];
 
+
+    const [orders, setOrders] = useState([]);
+    useEffect(() => {
+        const res = POS_GET('v1/order');
+        res.then((data) => {
+            setOrders(data.data);
+        });
+    }, []);
+
+
     return (
         <>
             <div className='d-flex justify-content-between align-items-center w-100 py-2 px-3 ps-3'>
@@ -57,9 +81,14 @@ const Header = () => {
                     <Button variant='text' className='start gap-2' onClick={() => navigate('/')}>
                         <Avatar
                             alt='image'
-                            src='data:image/jpeg;base64,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xLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRGJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLfRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjxLGRJjlb/2Q=='
+                            src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ1dxWcWXGNh_rO1UCfYKTy9TfPLwsTd6ilJw&s'
                         />
-                        <p className='truncate' style={{ color: StyleColors.appGrayText }}>RS Shopping management system </p>
+                        <p className='' style={{
+                            color: StyleColors.appGrayText,
+                            whiteSpace: 'nowrap',
+                            overflow: 'hidden',
+                            textOverflow: 'ellipsis'
+                        }}>RS Shopping</p>
                     </Button>
                 </div>
 
@@ -73,17 +102,36 @@ const Header = () => {
                             </span>
                         </div>
                     </div> */}
+                    <div className="app-defualt-user d-flex start px-2">
+                        <div style={{
+                            width: 32,
+                            height: 32,
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            backgroundColor: 'rgba(113, 113, 113, 0.2)',
+                            borderRadius: '50%',
+                            cursor: 'pointer'
+
+                        }}
+                            onClick={() => setIsLogoutDialogOpen(true)}
+                        >
+                            <NotificationsNoneIcon style={{ fontSize: 20, color: 'grey' }} />
+                        </div>
+                    </div>
 
                     <LanguageSwitcher />
+
 
                     <div className="app-defualt-user d-flex start px-2 py-1">
                         <Avatar
                             alt="Remy Sharp"
-                            src="https://gratisography.com/wp-content/uploads/2024/11/gratisography-augmented-reality-800x525.jpg"
+                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ1dxWcWXGNh_rO1UCfYKTy9TfPLwsTd6ilJw&s"
                             sx={{ width: 32, height: 32, cursor: 'pointer' }}
                             onClick={handleAvatarClick}
                         />
                     </div>
+
                 </div>
             </div>
 
@@ -129,7 +177,7 @@ const Header = () => {
                 }}>
                     {/* User Avatar */}
                     <Avatar
-                        src="https://gratisography.com/wp-content/uploads/2024/11/gratisography-augmented-reality-800x525.jpg"
+                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ1dxWcWXGNh_rO1UCfYKTy9TfPLwsTd6ilJw&s"
                         alt="User Profile"
                         sx={{
                             width: 120,
@@ -201,6 +249,76 @@ const Header = () => {
                         </Typography>
                     </Box>
                 </DialogContent>
+
+
+            </Dialog>
+
+            <Dialog fullScreen open={isLogoutDialogOpen} onClose={() => setIsLogoutDialogOpen(false)} TransitionComponent={Transition} >
+                <div className='h-full' style={{ backgroundColor: StyleColors.appBackground }}>
+                    <div className='w-full flex justify-between items-center px-2'>
+                        <div className="start">
+                            <IconButton variant='text' className='start gap-2' onClick={() => navigate('/')}>
+                                <Avatar
+                                    alt='image'
+                                    src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ1dxWcWXGNh_rO1UCfYKTy9TfPLwsTd6ilJw&s'
+                                />
+                                <p style={{
+                                    color: StyleColors.appGrayText,
+                                    whiteSpace: 'nowrap',
+                                    overflow: 'hidden',
+                                    textOverflow: 'ellipsis'
+                                }}>
+                                    RS Shopping management system
+                                </p>
+                            </IconButton>
+                        </div>
+                        <Box>
+                            <IconButton
+                                edge="start"
+                                color="inherit"
+                                onClick={() => setIsLogoutDialogOpen(false)}
+                                aria-label="close"
+                                sx={{
+                                    color: 'white',
+                                    backgroundColor: 'rgba(75, 10, 44, 0.2)',
+                                    '&:hover': {
+                                        backgroundColor: 'rgba(75, 10, 44, 0.5)',
+                                    }
+                                }}
+                            >
+                                <IoCloseOutline size={24} />
+                            </IconButton>
+                        </Box>
+                    </div>
+
+                    <div className='center mt-5'>
+                        <List
+                            sx={{ maxWidth: 1200, backgroundColor: StyleColors.appBackground }}>
+
+                            {
+                                orders.map((order, index) =>
+                                    order.order_status_sate == null ?
+                                        <ListItemButton className='bg-white mb-2'>
+                                            <ListItemAvatar>
+                                                <Paper className='center' sx={{ height: 120, width: 120, borderRadius: "50%", border: "2px solid rgb(37, 176, 74)", backgroundColor: "white", }}>
+                                                    <Avatar sx={{ height: 100, width: 100, }} src='https://png.pngtree.com/png-clipart/20240709/original/pngtree-casual-man-flat-design-avatar-profile-picture-vector-png-image_15526568.png'>
+                                                        <ImageIcon />
+                                                    </Avatar>
+                                                </Paper>
+                                            </ListItemAvatar>
+                                            <ListItemText className='ps-3' primary="Chan Dara" secondary='Thank you for your order! Since this is a larger request, it may take a bit more time to prepare. We appreciate your patience and will make sure everything is handled with care!"
+
+Let me know if you want it to sound more formal, friendly, or specific to a product or service.' />
+                                        </ListItemButton> : null
+                                )
+                            }
+
+
+
+                        </List>
+                    </div>
+
+                </div>
             </Dialog>
         </>
     );

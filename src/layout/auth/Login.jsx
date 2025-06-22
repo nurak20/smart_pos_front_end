@@ -164,14 +164,7 @@ export default function Login() {
                             : Translate(website.Label.Submit)}
                     </Button>
 
-                    <div className="text-center">
-                        <Link
-                            to={POSRoute.register}
-                            style={{ fontSize: StyleColors.fontMedium }}
-                        >
-                            {Translate(website.Label.AccountRegister)}
-                        </Link>
-                    </div>
+
                 </form>
             </div>
         </div>

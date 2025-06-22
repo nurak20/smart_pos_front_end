@@ -25,7 +25,7 @@ const ManageOrder = () => {
 
                 </div>
             </div>
-            <div className='bg-white rounded-md p-4'>
+            <div className='bg-white rounded-md p-4 overflow-x-auto'>
                 <OrderTable />
             </div>
         </div>

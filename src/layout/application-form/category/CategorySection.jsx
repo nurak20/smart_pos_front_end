@@ -21,14 +21,15 @@ const CategorySection = () => {
 
     return (
         <PanelSection
-            title={website.Label.ManageCategories}
+            title={{ km: "គ្រប់គ្រងប្រភេទអ៉វ៉ាន់", en: "Manage Categories" }}
             titleIcon={FaListAlt}
             formComponent={CategoryCreationForm}
             tableComponent={CategoriesTable}
             addButtonText={"Added New"}
             isLoading={isLoading}
+
             shimmerCount={4}
-            onFormSuccess={() => console.log('Category created successfully!')}
+
         />
     );
 };

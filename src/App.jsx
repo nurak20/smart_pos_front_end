@@ -5,6 +5,7 @@ import AppAdmin from './AppAdmin'
 import AppWeb from './AppWeb'
 import Login from './layout/auth/Login';
 import { useAuth } from './layout/auth/AuthContext';
+import POSAdminSystem from './pos/app/PosApp';
 function App() {
 
   const { logout, isAuthenticated, loading, hasRole, hasPermission, isAdmin, } = useAuth();
@@ -29,5 +30,6 @@ function App() {
       <button onClick={() => logout()}>Logout</button>
     </>
   )
+
 }
 export default App

@@ -32,7 +32,6 @@
 }
 
 .menu-item {
-
     display: flex;
     font-size: 18px;
     justify-content: start;
@@ -48,6 +47,7 @@
     margin-bottom: 10px;
     border-radius: 10px;
     border: 0.5px solid white;
+
 
 }
 

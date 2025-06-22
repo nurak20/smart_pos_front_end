@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import { useNavigate } from 'react-router-dom';
-import { Box, Button, CircularProgress, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Menu, Typography, useMediaQuery, useTheme } from '@mui/material';
+import { alpha, Box, Button, CircularProgress, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Menu, Typography, useMediaQuery, useTheme } from '@mui/material';
 import { POS_GET, POS_POST } from '../../../website/service/ApiService';
 import { EditIcon, MoreVerticalIcon } from 'lucide-react';
 import { StyleColors } from '../../../website/extension/Extension';
 import MenuItem from '@mui/material/MenuItem';
 import TextField from '../../../website/components/text_field/POSTextField';
-const ProductTable = () => {
+const ProductTable = ({ refresh }) => {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [pageSize, setPageSize] = useState(10);
@@ -67,7 +67,7 @@ const ProductTable = () => {
     };
     useEffect(() => {
         fetchProducts();
-    }, []);
+    }, [refresh]);
 
     const columns = [
         {
@@ -174,19 +174,57 @@ const ProductTable = () => {
     }
 
     return (
-        <div className=''>
-            <DataGrid
-                className='p-2'
-                sx={{ maxHeight: 992 }}
-                rows={products}
-                columns={columns}
-                pageSize={pageSize}
-                onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
-                rowsPerPageOptions={[5, 10, 20, 50]}
-                pagination
-                disableSelectionOnClick
-                getRowId={(row) => row.product_id}
-            />
+        <div className='overflow-x-auto'>
+            <Box sx={{ minWidth: 992 }}>
+                <DataGrid
+
+                    sx={{
+                        border: '0.5px solid rgba(189, 189, 189, 0.9)',
+                        '& .MuiDataGrid-columnHeaders': {
+                            backgroundColor: alpha(theme.palette.primary.main, 0.05),
+                            borderBottom: `1px solid ${alpha(theme.palette.primary.main, 0.1)}`,
+                            borderRadius: '16px 16px 0 0',
+                            '& .MuiDataGrid-columnHeader': {
+                                fontWeight: 700,
+                                fontSize: '0.875rem',
+                                color: theme.palette.text.primary,
+                                '&:focus': {
+                                    outline: 'none'
+                                }
+                            }
+                        },
+                        '& .MuiDataGrid-cell': {
+
+                            '&:focus': {
+                                outline: 'none'
+                            }
+                        },
+                        '& .MuiDataGrid-row': {
+
+                            cursor: 'pointer',
+                            transition: 'all 0.2s ease-in-out',
+                            '&:hover': {
+                                backgroundColor: alpha(theme.palette.primary.main, 0.02),
+
+                            },
+                            '&:nth-of-type(even)': {
+                                backgroundColor: alpha(theme.palette.action.hover, 0.02)
+                            }
+                        },
+
+                    }}
+                    className='p-2'
+
+                    rows={products}
+                    columns={columns}
+                    pageSize={pageSize}
+                    onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
+                    rowsPerPageOptions={[5, 10, 20, 50]}
+                    pagination
+                    disableSelectionOnClick
+                    getRowId={(row) => row.product_id}
+                />
+            </Box>
 
             <Dialog open={stockDialogOpen} onClose={handleStockDialogClose} fullScreen={fullScreen}>
                 <DialogTitle>Add Stock</DialogTitle>

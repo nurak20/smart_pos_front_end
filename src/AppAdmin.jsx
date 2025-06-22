@@ -67,7 +67,7 @@ import { Avatar, Button, Paper } from '@mui/material'
 import VendorDetail from './layout/page/people/vendor/VendorDetail'
 import { id, km } from 'date-fns/locale'
 import Home from './website/page/home/Home'
-
+import { motion } from "framer-motion";
 
 
 import { POSSize, StyleColors, Translate } from './website/extension/Extension'
@@ -230,6 +230,25 @@ function AppAdmin() {
             </>
         )
     }
+    const containerVariants = {
+        hidden: { opacity: 1 },
+        visible: {
+            opacity: 1,
+            transition: {
+                staggerChildren: 0.1,
+                when: "beforeChildren"
+            }
+        }
+    };
+
+    const itemVariants = {
+        hidden: { opacity: 0, x: -20 },
+        visible: {
+            opacity: 1,
+            x: 0,
+            transition: { duration: 0.5 }
+        }
+    };
     const administrator = () => {
         return (
             <>
@@ -237,24 +256,36 @@ function AppAdmin() {
                     <Header />
                     <Routes>
                         <Route path="/" element={<div className='p-2'><ManageOrder /></div>} />
-                        <Route path="/manage" element={
-                            <>
-                                <div className="flex flex-1 overflow-hidden">
+                        <Route
+                            path="/manage"
+                            element={
+                                <motion.div
+                                    initial="hidden"
+                                    animate="visible"
+                                    variants={containerVariants}
+                                    className="flex flex-1 overflow-hidden"
+                                >
                                     {/* Sidebar - Hidden on smaller screens */}
-                                    <aside className="w-[80px] lg:w-[300px] p-2">
+                                    <motion.aside
+                                        variants={itemVariants}
+                                        className="w-[80px] lg:w-[300px] p-2"
+                                    >
                                         <Menu />
-                                    </aside>
+                                    </motion.aside>
 
                                     {/* Main Dashboard Content */}
-                                    <main className="flex-1 p-2 ps-0 overflow-y-auto scrollbar-hide overscroll-contain border-0" style={{ scrollbarWidth: "none", }}>
+                                    <motion.main
+                                        variants={itemVariants}
+                                        className="flex-1 p-2 ps-0 overflow-y-auto scrollbar-hide overscroll-contain border-0"
+                                        style={{ scrollbarWidth: "none" }}
+                                    >
                                         <div className='h-full w-100'>
                                             <Outlet />
-
                                         </div>
-                                    </main>
-                                </div>
-
-                            </>}>
+                                    </motion.main>
+                                </motion.div>
+                            }
+                        >
                             <Route path={POSRoute.manageProduct} element={<ManageProuct />} />
                             <Route path={POSRoute.manageCategory} element={<CategorySection />} />
                         </Route>

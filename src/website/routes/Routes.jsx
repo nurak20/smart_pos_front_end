@@ -9,7 +9,7 @@ import UserAddress from "../page/map/UserAddress"
 import GoogleMapsGeocoder from "../page/map/GoogleMapsGeocoder"
 import LeafletMap from "../page/map/PosMap"
 import RegisterForm from "../page/form/POSRegister"
-import BarcodeGenerator from "../components/barcode/Barcode"
+// import BarcodeGenerator from "../components/barcode/Barcode"
 import EditProfileForm from "../page/form/POSEditProfile"
 import GuestOrderForm from "../page/form/GuestOrderForm"
 import { Navigate, Outlet } from 'react-router-dom';

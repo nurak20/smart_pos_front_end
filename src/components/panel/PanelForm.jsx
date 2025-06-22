@@ -1,11 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Button } from '@mui/material';
+import { Button, Fade, Grow, Slide, Snackbar, SnackbarContent } from '@mui/material';
 import { Add, Close } from '@mui/icons-material';
 import { StyleColors, Translate } from '../../website/extension/Extension';
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import SkeletonGrid from './ShimmerAnimate';
+
+
+function SlideTransition(props) {
+    return <Slide {...props} direction="up" />;
+}
+
+function GrowTransition(props) {
+    return <Grow {...props} />;
+}
+
 const PanelSection = ({
     title,
     titleIcon: TitleIcon,
@@ -17,7 +27,24 @@ const PanelSection = ({
     onFormSuccess
 }) => {
     const [showForm, setShowForm] = useState(false);
+    const [refresh, setRefersh] = useState();
+    const [state, setState] = React.useState({
+        open: false,
+        Transition: Fade,
+    });
+    const handleClick = (Transition) => () => {
+        setState({
+            open: true,
+            Transition,
+        });
+    };
 
+    const handleClose = () => {
+        setState({
+            ...state,
+            open: false,
+        });
+    };
     const toggleForm = () => setShowForm(!showForm);
     useEffect(() => {
         const timer = setTimeout(() => {
@@ -75,6 +102,8 @@ const PanelSection = ({
                                 onSuccess={() => {
                                     setShowForm(false);
                                     onFormSuccess?.();
+                                    setRefersh((refresh) => refresh + 1);
+
                                 }}
                             />
                         </div>
@@ -87,11 +116,11 @@ const PanelSection = ({
                 {isLoading && !showForm ? (
                     <>
                         <div className='d-block'>
-                            <SkeletonGrid gap={10} numCols={3} numRows={4} height={50} />
+                            <SkeletonGrid gap={10} numCols={3} numRows={4} height={60} />
                             <div className='end py-3'>
                                 <Skeleton height={50} width={150} />
                             </div>
-                            <SkeletonGrid gap={5} numCols={5} numRows={5} height={60} />
+                            <SkeletonGrid gap={5} numCols={5} numRows={5} height={60} isForm={false} />
                         </div>
                     </>
                 ) : (
@@ -104,12 +133,28 @@ const PanelSection = ({
                             ease: [0.16, 1, 0.3, 1]
                         }}
                     >
-                        <TableComponent />
+                        <TableComponent refresh={refresh} />
                     </motion.div>
                 )}
             </div>
+            <Snackbar
+                open={state.open}
+                onClose={handleClose}
+                TransitionComponent={state.Transition}
+                autoHideDuration={1200}
+                key={state.Transition.name}
+            >
+                <SnackbarContent
+                    style={{
+                        backgroundColor: "rgb(17, 156, 52)", // or any color you want
+                        color: "white"
+                    }}
+                    message={Translate({ km: "ទិន្នន័យត្រូវបានរក្សាទុកដោយជោគជ័យ!", en: "Data saved successfully!" })}
+                />
+            </Snackbar>
         </div>
     );
 };
 
 export default PanelSection;
+

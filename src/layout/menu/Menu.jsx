@@ -22,10 +22,10 @@ const MenuItem = ({ to, Icon, label }) => {
     return (
         <NavLink
             to={to}
-            className={({ isActive }) => (isActive ? "active-link ps-3 py-2" : "menu-item ps-3 py-2")}
+            className={({ isActive }) => (isActive ? "active-link ps-3 py-3" : "menu-item ps-3 py-3")}
         >
             <div className='start gap-3'>
-                <div className='fs-5'><Icon /></div>
+                <div className='fs-5'><Icon color={StyleColors.componentsColor} /></div>
                 <div className='hidden sm:hidden lg:block'>{label}</div>
 
             </div>
@@ -39,7 +39,7 @@ const MenuTitle = ({ title, children, expanded, onToggle }) => {
 
     return (
         <div className="menu-title-container">
-            <div className="menu-title ps-4 py-2" onClick={onToggle}>
+            <div className="menu-title ps-4 py-3 pe-2" onClick={onToggle}>
                 <span className='hidden sm:hidden lg:block'>{title}</span>
                 <span className={`menu-toggle-icon ${expanded ? "expanded" : ""}`}>
                     {expanded ? <HiOutlineMinus /> : <HiOutlinePlus />}

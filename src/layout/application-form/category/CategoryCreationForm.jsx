@@ -17,7 +17,7 @@ const initialValues = {
     status: true
 };
 
-const CategoryCreationForm = () => {
+const CategoryCreationForm = ({ onSuccess }) => {
     const [values, setValues] = useState(initialValues);
     const [errors, setErrors] = useState({});
     const [submitting, setSubmitting] = useState(false);
@@ -69,7 +69,7 @@ const CategoryCreationForm = () => {
             const res = POS_POST('v1/categories', submissionData)
             res.then((response) => {
                 setTimeout(() => {
-                    alert('Category created successfully!');
+                    onSuccess();
                     setSubmitting(false);
                     setValues(initialValues);
                 }, 1000);

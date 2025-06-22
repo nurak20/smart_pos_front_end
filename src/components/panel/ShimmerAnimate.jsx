@@ -8,7 +8,7 @@ const SkeletonItem = ({ height = 70 }) => {
 };
 
 // SkeletonGrid Component
-const SkeletonGrid = ({ numRows = 5, numCols = 3, height = 70, gap = 10 }) => {
+const SkeletonGrid = ({ numRows = 5, numCols = 3, height = 70, gap = 10, isForm = true }) => {
     return (
         <div
             className="skeleton-grid"
@@ -22,7 +22,10 @@ const SkeletonGrid = ({ numRows = 5, numCols = 3, height = 70, gap = 10 }) => {
             {Array.from({ length: numRows }).map((_, rowIndex) => (
                 <React.Fragment key={rowIndex}>
                     {Array.from({ length: numCols }).map((_, colIndex) => (
-                        <SkeletonItem key={colIndex} height={height} />
+                        <div>
+                            {isForm ? <Skeleton width={100} height={15} className='my-2' /> : null}
+                            <SkeletonItem key={colIndex} height={height} />
+                        </div>
                     ))}
                 </React.Fragment>
             ))}

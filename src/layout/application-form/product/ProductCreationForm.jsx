@@ -11,6 +11,7 @@ import { POS_GET, POS_POST } from '../../../website/service/ApiService';
 import FileUpload from '../../../website/components/text_field/FileUpload';
 import POSCommobox from '../../../website/components/search_dropdown/POSCommobox';
 import CustomCommoBox from '../../../components/select/CustomCommoBox';
+import BarcodeTextField from '../../../components/barcode/BarcodeTextField';
 
 const initialValues = {
     category_id: '',
@@ -27,7 +28,7 @@ const initialValues = {
     image_display_group: ''
 };
 
-const ProductCreationForm = () => {
+const ProductCreationForm = ({ onSuccess }) => {
     const [values, setValues] = useState(initialValues);
     const [errors, setErrors] = useState({});
     const [submitting, setSubmitting] = useState(false);
@@ -47,9 +48,6 @@ const ProductCreationForm = () => {
             temp.stock = fieldValues.stock >= 0 ? '' : 'Stock must be a positive number.';
         if ('category_id' in fieldValues)
             temp.category_id = fieldValues.category_id ? '' : 'Category is required.';
-        if ('warehouse_id' in fieldValues)
-            temp.warehouse_id = fieldValues.warehouse_id ? '' : 'Warehouse is required.';
-
         setErrors({ ...temp });
         return Object.values(temp).every((x) => x === '');
     };
@@ -61,6 +59,7 @@ const ProductCreationForm = () => {
         validate({ [name]: value });
     };
     const uploadImage = (e, name) => {
+        console.log(e.target.values);
         const { value } = e.target;
         setValues({
             ...values,
@@ -98,6 +97,7 @@ const ProductCreationForm = () => {
                 stock: parseInt(values.stock),
                 created_by: 'current-user-id', // This should come from auth context
                 updated_by: 'current-user-id',
+                "warehouse_id": null,
                 created_date: new Date().toISOString(),
                 updated_date: new Date().toISOString()
             };
@@ -105,7 +105,7 @@ const ProductCreationForm = () => {
             const res = POS_POST('v1/products', submissionData)
             res.then((respone) => {
                 setTimeout(() => {
-                    alert('Product created successfully!');
+                    onSuccess();
                     setSubmitting(false);
                     setValues(initialValues);
                 }, 1000);
@@ -128,6 +128,7 @@ const ProductCreationForm = () => {
         })
 
     }
+    const [barcode, setbarcode] = useState();
 
 
     return (
@@ -162,6 +163,8 @@ const ProductCreationForm = () => {
 
                             <CustomCommoBox
                                 label="Categories"
+                                name="category_id"
+                                error={errors.category_id}
                                 items={categories}
                                 searchKey="name"
                                 labelKeys={['name']}
@@ -181,16 +184,17 @@ const ProductCreationForm = () => {
 
                         {/* Second Column */}
                         <div className='col-md-6 col-lg-4 mb-3'>
-                            <TextField
-                                label="Product Code"
-                                id="code"
-                                name="code"
-                                type="text"
+                            <BarcodeTextField
+                                id="barcode-field-1"
+                                label="Generate Barcode"
                                 value={values.code}
-                                onChange={handleChange}
-                                error={errors.code}
-                                prefixIcon='FaBarcode'
-                                required
+                                onChange={(e) => setValues({ ...values, code: e.target.value })}
+                                onBarcodeGenerated={({ text, image }) => {
+
+                                    setValues({ ...values, code: text })
+                                }}
+                                showBarcodeOnClick={true}
+                                size="medium"
                             />
                         </div>
 
@@ -265,21 +269,6 @@ const ProductCreationForm = () => {
                                 onChange={handleChange}
                                 error={errors.stock}
                                 prefixIcon='FaBoxes'
-                                required
-                            />
-                        </div>
-
-                        {/* Eighth Column */}
-                        <div className='col-md-6 col-lg-4 mb-3'>
-                            <TextField
-                                label="Warehouse ID"
-                                id="warehouse_id"
-                                name="warehouse_id"
-                                type="text"
-                                value={values.warehouse_id}
-                                onChange={handleChange}
-                                error={errors.warehouse_id}
-                                prefixIcon='FaWarehouse'
                                 required
                             />
                         </div>
