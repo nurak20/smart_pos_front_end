@@ -14,7 +14,4 @@ services:
       - NODE_ENV=development
       - CHOKIDAR_USEPOLLING=true # Enables file watching in Docker
       - WATCHPACK_POLLING=true # Additional polling for file changes
-    init: true
-    tty: true
-    stdin_open: true
     command: [ "npm", "run", "dev", "--", "--host", "0.0.0.0" ]
