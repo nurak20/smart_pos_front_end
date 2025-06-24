@@ -13,12 +13,15 @@ const CustomCommoBox = ({
     fontSize,
     error,
     className,
+    id,
     placeholder,
     top,
     bottom,
     left,
     right,
     manager,
+    labelProps = {},
+    required,
     defaultValueIndex
 }) => {
     const [searchTerm, setSearchTerm] = useState("");
@@ -52,27 +55,22 @@ const CustomCommoBox = ({
     ];
 
     return (
-        <>
+        <div className="py-3">
 
-            <label
-                className="pos-input-label"
-                style={{ fontSize: `${fontSize - 3}px` }}
-            >
-                {label}
-            </label>
-            {/* {error && (
-                <span
-                    className="validation-error"
-                    style={{ fontSize: `${fontSize - 2}px` }}
-                >
-                    {error}
-                </span>
-            )} */}
+            <div className="pos-form-group position-relative" style={{ padding: '12px 0px', }}>
+                {label && (
+                    <label
+                        htmlFor={id}
+                        className="pos-input-label position-absolute px-1"
 
-            <div className="pos-form-group " style={{ padding: '12px 0px', marginTop: "7px" }}>
-                {/* <div className="">
-                    <IoAccessibility size={22} color={StyleColors.appGrayText} />
-                </div> */}
+                        style={{ color: StyleColors.appGrayText, top: -18, backgroundColor: "white", left: 12 }}
+                        {...labelProps}
+                    >
+                        {label}<span className='label-required'>{required ? ' *' : ''}</span>
+                    </label>
+                )}
+
+
                 <Autocomplete
 
                     id="size-small-standard"
@@ -191,7 +189,7 @@ const CustomCommoBox = ({
             </div>
 
 
-        </>
+        </div>
     );
 };
 

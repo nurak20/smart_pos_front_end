@@ -25,7 +25,7 @@ export const API_ENDPOINT = {
 //     ? 'http://62.146.237.218:3000/api/'
 //     : 'http://localhost:2000/api/';
 
-export const API_BASE_URL = 'http://62.146.237.218:3000/api/';
+export const API_BASE_URL = import.meta.env.VITE_API_URL
 
 
 // Create axios instance with interceptors

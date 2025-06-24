@@ -166,6 +166,7 @@ const ProductCreationForm = ({ onSuccess }) => {
                                 name="category_id"
                                 error={errors.category_id}
                                 items={categories}
+                                required={true}
                                 searchKey="name"
                                 labelKeys={['name']}
                                 onItemSelected={handleSubCategorySelect}
@@ -301,7 +302,7 @@ const ProductCreationForm = ({ onSuccess }) => {
                             />
                         </div>
 
-                        <div className='col-md-6 col-lg-4 mb-3'>
+                        <div className='col-md-12 col-lg-8 mb-3'>
                             <TextField
                                 label="Description"
                                 id="description"

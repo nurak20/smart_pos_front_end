@@ -70,13 +70,13 @@ export default function HomePage() {
         return <div className="text-center py-5">Loading products…</div>;
     }
 
-    if (error) {
-        return (
-            <div className="alert alert-danger text-center py-5">
-                {error}
-            </div>
-        );
-    }
+    // if (error) {
+    //     return (
+    //         <div className="alert alert-danger text-center py-5">
+    //             {error}
+    //         </div>
+    //     );
+    // }
 
     const items = [
         {
@@ -151,7 +151,7 @@ export default function HomePage() {
 
 
             <div className="py-3">
-                {sections.map((section) => (
+                {sections != null ? sections.map((section) => (
                     <div key={section.id} className="mb-5">
                         <SectionHeader text={section.title} />
 
@@ -176,7 +176,7 @@ export default function HomePage() {
                             })}
                         </div>
                     </div>
-                ))}
+                )) : null}
 
             </div>
         </div>

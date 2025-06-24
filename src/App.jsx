@@ -8,28 +8,26 @@ import { useAuth } from './layout/auth/AuthContext';
 import POSAdminSystem from './pos/app/PosApp';
 function App() {
 
-  const { logout, isAuthenticated, loading, hasRole, hasPermission, isAdmin, } = useAuth();
-  if (!isAuthenticated) {
-    return <>
-
-      <Routes>
-        <Route path="/*" element={<Login />} />
-      </Routes>
-    </>
-  }
-  if (isAuthenticated && isAdmin()) {
+  if (import.meta.env.VITE_APP == "admin") {
+    return (
+      <AppAdmin />
+    )
+  } else if (import.meta.env.VITE_APP == "web") {
+    return (
+      <AppWeb />
+    )
+  } else if (import.meta.env.VITE_APP == "pos") {
+    return (
+      <POSAdminSystem />
+    )
+  } else {
     return (
       <>
-        <AppAdmin />
+        NOT FOUND
+
       </>
     )
   }
-  return (
-    <>
-      <h1>NO PERMISSION PLEASE TRY AGAIN!</h1>
-      <button onClick={() => logout()}>Logout</button>
-    </>
-  )
 
 }
 export default App

@@ -63,6 +63,7 @@ const TextField = React.forwardRef(({
 
     const Prefix = prefixIcon && IconPack[prefixIcon] ? IconPack[prefixIcon] : null;
     const Suffix = suffixIcon && IconPack[suffixIcon] ? IconPack[suffixIcon] : null;
+    const isTextarea = type === 'textarea';
 
     const PasswordToggleIconComp = isPassword
         ? IconPack[showPassword ? 'IoMdEye' : 'IoMdEyeOff']
@@ -71,47 +72,84 @@ const TextField = React.forwardRef(({
 
 
     return (
-        <div className={`${size} ${className}`.trim()}>
-            {label && (
-                <label
-                    htmlFor={id}
-                    className="pos-input-label"
-                    style={{ color: StyleColors.appGrayText }}
-                    {...labelProps}
-                >
-                    {label}<span className='label-required'>{required ? ' *' : ''}</span>
-                </label>
-            )}
-            <div className={`pos-form-group p-2 px-3 ${error ? 'pos-input-field--error' : ''}`}>
-                {Prefix && (
+        <div className={`py-3 ${size} ${className}`.trim()}>
+
+            <div className={` position-relative pos-form-group p-2 px-3 ${error ? 'pos-input-field--error' : ''}`}>
+
+
+                {label && (
+                    <label
+                        htmlFor={id}
+                        className="pos-input-label position-absolute px-1"
+
+                        style={{ color: StyleColors.appGrayText, top: -18, backgroundColor: "white" }}
+                        {...labelProps}
+                    >
+                        {label}<span className='label-required'>{required ? ' *' : ''}</span>
+                    </label>
+                )}
+
+                {Prefix && !isTextarea && (
                     <span>
                         <Prefix size={22} color={StyleColors.appGrayText} />
                     </span>
                 )}
-                <input
-                    ref={ref}
-                    id={id}
-                    name={name}
-                    type={type == 'password' ? inputType : type}
-                    placeholder={placeholder ? placeholder : `${Translate({
-                        km: 'សូមបញ្ចូល',
-                        en: 'Enter',
-                    })} ${label}`}
-                    disabled={disabled}
-                    readOnly={readOnly}
-                    required={required}
-                    value={value}
-                    onChange={onChange}
-                    onBlur={onBlur}
-                    onFocus={onFocus}
-                    onKeyDown={onKeyDown}
-                    onKeyUp={onKeyUp}
+                {isTextarea && (
+                    <span className='relative' style={{ top: -30 }}>
+                        <Prefix size={22} color={StyleColors.appGrayText} />
+                    </span>
+                )}
+                {isTextarea ? (
+                    <textarea
+                        ref={ref}
+                        id={id}
+                        name={name}
+                        placeholder={placeholder ? placeholder : `${Translate({
+                            km: 'សូមបញ្ចូល',
+                            en: 'Enter',
+                        })} ${label}`}
+                        disabled={disabled}
+                        readOnly={readOnly}
+                        required={required}
+                        value={value}
+                        onChange={onChange}
+                        onBlur={onBlur}
+                        onFocus={onFocus}
+                        onKeyDown={onKeyDown}
+                        onKeyUp={onKeyUp}
 
-                    className={`border-0 pos-input-fields`}
-                    style={{ padding, height, fontSize }}
-                    {...inputProps}
-                    {...rest}
-                />
+                        className={`flex-1 pt-2 bg-transparent border-0 outline-none focus:outline-none resize-none ${disabled ? 'cursor-not-allowed text-gray-400' : 'text-gray-900'
+                            }`}
+                        style={{ fontSize, minHeight: 100 }}
+                        {...inputProps}
+                        {...rest}
+                    />
+                ) : (
+                    <input
+                        ref={ref}
+                        id={id}
+                        name={name}
+                        type={type == 'password' ? inputType : type}
+                        placeholder={placeholder ? placeholder : `${Translate({
+                            km: 'សូមបញ្ចូល',
+                            en: 'Enter',
+                        })} ${label}`}
+                        disabled={disabled}
+                        readOnly={readOnly}
+                        required={required}
+                        value={value}
+                        onChange={onChange}
+                        onBlur={onBlur}
+                        onFocus={onFocus}
+                        onKeyDown={onKeyDown}
+                        onKeyUp={onKeyUp}
+
+                        className={`border-0 pos-input-fields`}
+                        style={{ padding, height, fontSize }}
+                        {...inputProps}
+                        {...rest}
+                    />
+                )}
                 {Suffix && !isPassword && (
                     <span className="" >
                         <Suffix size={22} color={StyleColors.appGrayText} />

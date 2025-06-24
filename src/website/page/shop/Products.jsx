@@ -11,8 +11,8 @@ const Products = () => {
     useEffect(() => {
 
         const fetchProduct = async () => {
-            const res = await POS_GET('v1/products');
-            console.log(res.data);
+            const res = await POS_GET('v1/products').catch(e => console.log(e));
+
             setProduct(res.data);
             setLoading(false);
         }

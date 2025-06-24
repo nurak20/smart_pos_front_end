@@ -11,6 +11,7 @@ const FileUpload = React.forwardRef(({
     label,
     labelProps = {},
     value,
+    id,
     onChange,
     disabled = false,
     required = false,
@@ -132,20 +133,10 @@ const FileUpload = React.forwardRef(({
     };
 
     return (
-        <div className={`${size} ${className}`.trim()}>
-            {label && (
-                <label
-                    htmlFor={rest.id}
-                    className="pos-input-label"
-                    style={{ color: StyleColors.appGrayText }}
-                    {...labelProps}
-                >
-                    {label}<span className='label-required'>{required ? ' *' : ''}</span>
-                </label>
-            )}
+        <div className={`py-3 ${size} ${className}`.trim()}>
 
             <div
-                className={`pos-form-group p-2 px-3 ${error ? 'pos-input-field--error' : ''} ${isDragging ? 'drag-active' : ''}`}
+                className={`position-relative pos-form-group p-2 px-3 ${error ? 'pos-input-field--error' : ''} ${isDragging ? 'drag-active' : ''}`}
                 style={{
                     cursor: disabled || uploading ? 'not-allowed' : 'pointer',
                     position: 'relative',
@@ -156,6 +147,17 @@ const FileUpload = React.forwardRef(({
                 onDragLeave={handleDragLeave}
                 onDrop={handleDrop}
             >
+                {label && (
+                    <label
+                        htmlFor={id}
+                        className="pos-input-label position-absolute px-1"
+
+                        style={{ color: StyleColors.appGrayText, top: -18, backgroundColor: "white" }}
+                        {...labelProps}
+                    >
+                        {label}<span className='label-required'>{required ? ' *' : ''}</span>
+                    </label>
+                )}
                 <input
                     ref={fileInputRef}
                     type="file"

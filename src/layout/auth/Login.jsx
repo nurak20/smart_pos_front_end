@@ -91,7 +91,7 @@ export default function Login() {
 
     return (
         <div
-            className="container center shadow-sm rounded p-4 mt-2"
+            className="container center shadow-sm rounded p-4 mt-2 bg-white"
             style={{ maxWidth: '600px' }}
         >
             <div className="w-100">

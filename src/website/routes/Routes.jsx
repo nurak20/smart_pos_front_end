@@ -6,7 +6,7 @@ import ProductDetail from "../page/shop/ProductDetail"
 import LoginAccount from "../page/setting/LoginAccount"
 import ShoppingCartPage from "../page/shop/ShopingCard"
 import UserAddress from "../page/map/UserAddress"
-import GoogleMapsGeocoder from "../page/map/GoogleMapsGeocoder"
+
 import LeafletMap from "../page/map/PosMap"
 import RegisterForm from "../page/form/POSRegister"
 // import BarcodeGenerator from "../components/barcode/Barcode"
@@ -34,7 +34,7 @@ export const WEBRoute = () => {
                 <Route path={POSRoute.cart} element={<><ShoppingCartPage /></>} />
                 <Route path={'/create-address'} element={<><UserAddress /></>} />
                 <Route path={'/register'} element={<RegisterForm />} />
-                <Route path={'/barcode'} element={<BarcodeGenerator />} />
+
                 <Route element={<ProfileMiddleWare />}>
                     <Route path={POSRoute.profile} element={<EditProfileForm />} />
                 </Route>

@@ -13,6 +13,9 @@ const BarcodeTextField = React.forwardRef(({
     disabled = false,
     size = 'medium',
     className = '',
+    required,
+    labelProps = {},
+    id,
     ...rest
 }, ref) => {
     const [barcodeImage, setBarcodeImage] = useState('');
@@ -121,17 +124,24 @@ const BarcodeTextField = React.forwardRef(({
     };
 
     return (
-        <div className={` ${className}`}>
+        <div className={`py-3 ${className}`}>
             {/* Hidden canvas for barcode generation */}
             <canvas ref={canvasRef} style={{ display: 'none' }} />
-
-            {/* Label */}
-            <label className="pos-input-label">
-                {label}
-            </label>
-
             {/* Input field */}
-            <div className='pos-form-group py-2 px-3 flex items-center'>
+            <div className='pos-form-group py-2 px-3 flex items-center position-relative'>
+
+                {label && (
+                    <label
+                        htmlFor={id}
+                        className="pos-input-label position-absolute px-1"
+
+                        style={{ color: StyleColors.appGrayText, top: -18, backgroundColor: "white", left: 12 }}
+                        {...labelProps}
+                    >
+                        {label}<span className='label-required'>{required ? ' *' : ''}</span>
+                    </label>
+                )}
+
                 {barcodeImage && (
                     <img
                         onClick={handleClick}

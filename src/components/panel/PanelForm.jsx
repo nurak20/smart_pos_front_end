@@ -118,9 +118,13 @@ const PanelSection = ({
                         <div className='d-block'>
                             <SkeletonGrid gap={10} numCols={3} numRows={4} height={60} />
                             <div className='end py-3'>
-                                <Skeleton height={50} width={150} />
+                                <Skeleton height={40} width={150} />
                             </div>
-                            <SkeletonGrid gap={5} numCols={5} numRows={5} height={60} isForm={false} />
+                            <div className='pb-1'>
+                                <SkeletonGrid gap={10} numCols={5} numRows={1} height={50} isForm={false} />
+
+                            </div>
+                            <SkeletonGrid gap={5} numCols={1} numRows={5} height={50} isForm={false} />
                         </div>
                     </>
                 ) : (

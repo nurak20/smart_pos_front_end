@@ -24,7 +24,7 @@ import Setting from './layout/page/setting/Setting'
 import User from './layout/page/admin/User'
 import Journal from './layout/page/accountant/Journal'
 import JournalDetail from './layout/page/accountant/JournalDetail'
-import Login from './layout/form/Login'
+
 import Cookies from 'js-cookie'
 import { decryptData } from './cryptoJs/Crypto'
 import { useContext, useEffect, useState } from 'react'
@@ -93,6 +93,8 @@ import ManageOrder from './layout/application-form/order/ManageOrder'
 import ManageProuct from './layout/application-form/product/ManageProuct'
 import CategorySection from './layout/application-form/category/CategorySection'
 import Header from './components/header/Header'
+import { useAuth } from './layout/auth/AuthContext'
+import Login from './layout/auth/Login'
 
 function AppAdmin() {
     const domainName = hostName();
@@ -300,6 +302,23 @@ function AppAdmin() {
 
 
 
+
+    const { logout, isAuthenticated, loading, hasRole, hasPermission, isAdmin, } = useAuth();
+    if (!isAuthenticated) {
+        return <>
+
+            <Routes>
+                <Route path="/*" element={<Login />} />
+            </Routes>
+        </>
+    }
+    if (isAuthenticated && isAdmin()) {
+        return (
+            <>
+                {administrator()}
+            </>
+        )
+    }
 
 
     return (

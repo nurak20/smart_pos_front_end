@@ -262,12 +262,7 @@ const Header = () => {
                                     alt='image'
                                     src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ1dxWcWXGNh_rO1UCfYKTy9TfPLwsTd6ilJw&s'
                                 />
-                                <p style={{
-                                    color: StyleColors.appGrayText,
-                                    whiteSpace: 'nowrap',
-                                    overflow: 'hidden',
-                                    textOverflow: 'ellipsis'
-                                }}>
+                                <p >
                                     RS Shopping management system
                                 </p>
                             </IconButton>
