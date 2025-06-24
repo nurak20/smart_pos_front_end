@@ -45,7 +45,7 @@ const CategoriesView = () => {
         {
             id: 8,
             name: 'Monitors',
-            imageUrl: '/images/monitors.jpg'
+            imageUrl: '/images/monitors.jpg '
         },
 
     ];
