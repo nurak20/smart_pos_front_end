@@ -3,12 +3,14 @@ import { useNavigate, Link, useLocation } from 'react-router-dom';
 
 import website from '../../website/json/website.json';
 import { PiUserCircle } from 'react-icons/pi';
-import { Button } from '@mui/material';
+import { Avatar, Button } from '@mui/material';
 import { POSRoute } from '../../website/routes/Routes';
 import TextField from '../../website/components/text_field/POSTextField';
 import { POS_POST } from '../../website/service/ApiService';
 import { StyleColors, Translate } from '../../website/extension/Extension';
 import { useAuth } from './AuthContext';
+import { Container } from 'lucide-react';
+import './style.css'
 
 const initialValues = {
     username: '',
@@ -90,83 +92,136 @@ export default function Login() {
     };
 
     return (
-        <div
-            className="container center shadow-sm rounded p-4 mt-2 bg-white"
-            style={{ maxWidth: '600px' }}
-        >
-            <div className="w-100">
-                <p
-                    className="center gap-2 pt-1 pb-3"
-                    style={{ fontSize: '30px' }}
-                >
-                    <PiUserCircle size={30} />{' '}
-                    {Translate(website.Label.AccountLogin)}
-                </p>
+        <>
+            <div className='container-fluid position-absolute top-0 left-0 right-0 bottom-0'>
+                <div className="position-relative h-100">
 
-                {serverError && (
-                    <div
-                        className="alert alert-danger text-center"
-                        style={{
-                            color: 'red',
-                            marginBottom: '1rem',
-                            padding: '0.75rem',
-                            border: '1px solid #f5c6cb',
-                            borderRadius: '0.375rem',
-                            backgroundColor: '#f8d7da'
-                        }}
-                    >
-                        {serverError}
+                </div>
+                <div
+                    className="position-absolute top-0 right-0 left-0 h-100  shadow-md d-flex"
+
+                >
+                    <div className="w-100 p-3 center rounded-lg" style={{ backgroundColor: "rgba(255,255,255,1)" }}>
+                        <div className='start w-full hidden md:flex max-w-[600px]'>
+                            <div className='hidden md:block'>
+                                <div className='center '>
+                                    <Avatar src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ1dxWcWXGNh_rO1UCfYKTy9TfPLwsTd6ilJw&s' className="shadow-md" sx={{ width: 150, height: 150 }} />
+
+                                </div>
+                                <div className='h3 center py-3' style={{ color: StyleColors.componentsColor }}>
+                                    RS Shopping
+                                </div>
+                                <img src="https://img.freepik.com/free-vector/mobile-login-concept-illustration_114360-83.jpg?semt=ais_hybrid&w=740" alt="" className="src" />
+                            </div>
+                        </div>
+                        <div className="w-full center" >
+                            <div className='max-w-[600px] w-full'>
+                                <div className='block md:hidden'>
+                                    <div className='center'>
+                                        <Avatar src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ1dxWcWXGNh_rO1UCfYKTy9TfPLwsTd6ilJw&s' sx={{ width: 150, height: 150 }} />
+
+                                    </div>
+                                    <div className='h3 center py-3' style={{ color: StyleColors.componentsColor }}>
+                                        RS Shopping
+                                    </div>
+                                </div>
+
+                                <div className='py-4'>
+                                    <p
+                                        className=""
+                                        style={{ fontSize: '25px' }}
+                                    >
+
+                                        {Translate(website.Label.AccountLogin)}
+
+                                    </p>
+                                    <p
+                                        className="text-gray-500"
+                                        style={{ fontSize: '16px' }}
+                                    >
+
+                                        Please enter your username and password to login.
+
+                                    </p>
+                                </div>
+
+                                {serverError && (
+                                    <div
+                                        className="alert alert-danger text-center"
+                                        style={{
+                                            color: 'red',
+                                            marginBottom: '1rem',
+                                            padding: '0.75rem',
+                                            border: '1px solid #f5c6cb',
+                                            borderRadius: '0.375rem',
+                                            backgroundColor: '#f8d7da'
+                                        }}
+                                    >
+                                        {serverError}
+                                    </div>
+                                )}
+
+                                <form
+                                    style={{ width: '100%' }}
+                                    onSubmit={handleSubmit}
+                                    noValidate
+                                >
+                                    <TextField
+                                        label="Username"
+                                        name="username"
+                                        type="text"
+                                        value={values.username}
+                                        onChange={handleChange}
+                                        prefixIcon="FaUser"
+                                        error={errors.username}
+                                        required
+                                        autoComplete="username"
+                                    />
+
+                                    <TextField
+                                        label="Password"
+                                        name="password"
+                                        type="password"
+                                        value={values.password}
+                                        onChange={handleChange}
+                                        prefixIcon="IoIosLock"
+                                        typeIcon="io"
+                                        error={errors.password}
+                                        required
+                                        autoComplete="current-password"
+                                    />
+
+                                    <Button
+                                        sx={{
+                                            background: StyleColors.componentsColor,
+                                            borderRadius: '10px',
+                                            fontSize: '16px',
+                                            fontWeight: '400',
+                                            color: "white",
+                                            padding: '13px 0px',
+                                            textTransform: "none",
+                                            '&hover': {
+                                                background: StyleColors.buttonLightPink,
+                                                color: 'white',
+                                            },
+                                        }}
+                                        type="submit"
+                                        className="shadow-components-color w-100 my-3"
+                                        disabled={submitting}
+                                    >
+                                        {submitting
+                                            ? 'Logging in…'
+                                            : Translate({
+                                                en: 'Login',
+                                                km: 'ចូលគណនី',
+                                            })}
+                                    </Button>
+                                </form>
+                            </div>
+                        </div>
                     </div>
-                )}
-
-                <form
-                    style={{ width: '100%' }}
-                    onSubmit={handleSubmit}
-                    noValidate
-                >
-                    <TextField
-                        label="Username"
-                        name="username"
-                        type="text"
-                        value={values.username}
-                        onChange={handleChange}
-                        prefixIcon="FaUser"
-                        error={errors.username}
-                        required
-                        autoComplete="username"
-                    />
-
-                    <TextField
-                        label="Password"
-                        name="password"
-                        type="password"
-                        value={values.password}
-                        onChange={handleChange}
-                        prefixIcon="IoIosLock"
-                        typeIcon="io"
-                        error={errors.password}
-                        required
-                        autoComplete="current-password"
-                    />
-
-                    <Button
-                        style={{
-                            background: StyleColors.componentsColor,
-                            borderRadius: '10px',
-                            color: "white",
-                        }}
-                        type="submit"
-                        className="pos-button pos-button--primary w-100 py-3 my-3"
-                        disabled={submitting}
-                    >
-                        {submitting
-                            ? 'Logging in…'
-                            : Translate(website.Label.Submit)}
-                    </Button>
-
-
-                </form>
+                </div>
             </div>
-        </div>
+        </>
     );
 }

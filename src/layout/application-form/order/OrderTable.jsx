@@ -22,6 +22,7 @@ import {
     Package,
     TrendingUp
 } from 'lucide-react';
+import { POSRoute } from '../../../website/routes/Routes';
 
 const OrderTable = () => {
     const [orders, setOrders] = useState([]);
@@ -376,7 +377,7 @@ const OrderTable = () => {
     }
 
     return (
-        <Box sx={{ minWidth: 992, minHeight: 400 }}>
+        <Box sx={{ minWidth: 992, minHeight: 400, maxHeight: 992 }}>
             <DataGrid
                 rows={orders}
                 columns={columns}
@@ -386,60 +387,68 @@ const OrderTable = () => {
                 pagination
                 disableSelectionOnClick
                 getRowId={(row) => row.order_id}
-                sx={{
-                    border: 'none',
-                    '& .MuiDataGrid-main': {
-                        borderRadius: '16px',
-                    },
-                    '& .MuiDataGrid-columnHeaders': {
-                        backgroundColor: alpha(theme.palette.primary.main, 0.05),
-                        borderBottom: `1px solid ${alpha(theme.palette.primary.main, 0.1)}`,
-                        borderRadius: '16px 16px 0 0',
-                        '& .MuiDataGrid-columnHeader': {
-                            fontWeight: 700,
-                            fontSize: '0.875rem',
-                            color: theme.palette.text.primary,
-                            '&:focus': {
-                                outline: 'none'
-                            }
-                        }
-                    },
-                    '& .MuiDataGrid-cell': {
-                        borderBottom: `0.5px solid ${alpha(theme.palette.divider, 0.08)}`,
-                        '&:focus': {
-                            outline: 'none'
-                        }
-                    },
-                    '& .MuiDataGrid-row': {
-                        cursor: 'pointer',
-                        transition: 'all 0.2s ease-in-out',
-                        '&:hover': {
-                            backgroundColor: alpha(theme.palette.primary.main, 0.02),
-                            // transform: 'scale(1.01)',
-                            boxShadow: `0 4px 12px ${alpha(theme.palette.common.black, 0.05)}`
-                        },
-                        '&:nth-of-type(even)': {
-                            backgroundColor: alpha(theme.palette.action.hover, 0.02)
-                        }
-                    },
-                    '& .MuiDataGrid-footerContainer': {
-                        // borderTop: `0.5px solid ${alpha(theme.palette.divider, 0.08)}`,
-                        backgroundColor: alpha(theme.palette.background.paper, 0.8),
-                        backdropFilter: 'blur(8px)'
-                    },
-                    '& .MuiDataGrid-selectedRowCount': {
-                        visibility: 'hidden'
-                    },
-                    '& .MuiTablePagination-toolbar': {
-                        paddingRight: '20px'
-                    },
-                    '& .MuiTablePagination-selectLabel, & .MuiTablePagination-displayedRows': {
-                        fontWeight: 500,
-                        color: theme.palette.text.secondary
-                    }
-                }}
+                // sx={{
+                //     border: 'none',
+                //     '& .MuiDataGrid-main': {
+                //         borderRadius: '16px',
+                //     },
+                //     '& .MuiDataGrid-columnHeaders': {
+                //         backgroundColor: alpha(theme.palette.primary.main, 0.05),
+                //         borderBottom: `1px solid ${alpha(theme.palette.primary.main, 0.1)}`,
+                //         borderRadius: '16px 16px 0 0',
+                //         '& .MuiDataGrid-columnHeader': {
+                //             fontWeight: 700,
+                //             fontSize: '0.875rem',
+                //             color: theme.palette.text.primary,
+                //             '&:focus': {
+                //                 outline: 'none'
+                //             }
+                //         }
+                //     },
+                //     '& .MuiDataGrid-cell': {
+                //         borderBottom: `0.5px solid ${alpha(theme.palette.divider, 0.08)}`,
+                //         '&:focus': {
+                //             outline: 'none'
+                //         }
+                //     },
+                //     '& .MuiDataGrid-row': {
+                //         cursor: 'pointer',
+                //         transition: 'all 0.2s ease-in-out',
+                //         '&:hover': {
+                //             backgroundColor: alpha(theme.palette.primary.main, 0.02),
+                //             // transform: 'scale(1.01)',
+                //             boxShadow: `0 4px 12px ${alpha(theme.palette.common.black, 0.05)}`
+                //         },
+                //         '&:nth-of-type(even)': {
+                //             backgroundColor: alpha(theme.palette.action.hover, 0.02)
+                //         }
+                //     },
+                //     '& .MuiDataGrid-footerContainer': {
+                //         // borderTop: `0.5px solid ${alpha(theme.palette.divider, 0.08)}`,
+                //         backgroundColor: alpha(theme.palette.background.paper, 0.8),
+                //         backdropFilter: 'blur(8px)'
+                //     },
+                //     '& .MuiDataGrid-selectedRowCount': {
+                //         visibility: 'hidden'
+                //     },
+                //     '& .MuiTablePagination-toolbar': {
+                //         paddingRight: '20px'
+                //     },
+                //     '& .MuiTablePagination-selectLabel, & .MuiTablePagination-displayedRows': {
+                //         fontWeight: 500,
+                //         color: theme.palette.text.secondary
+                //     }
+                // }}
                 disableRowSelectionOnClick
                 rowHeight={64}
+                onRowClick={(params) => {
+                    // Navigate to another page with the row's ID
+                    // Example using React Router:
+                    navigate(`${POSRoute.manageOrder}?order=${params.row.order_id}`);
+
+                    // Or if you're using window.location:
+                    // window.location.href = `/orders/${params.row.order_id}`;
+                }}
                 headerHeight={56}
             />
         </Box>

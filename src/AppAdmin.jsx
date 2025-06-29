@@ -95,6 +95,8 @@ import CategorySection from './layout/application-form/category/CategorySection'
 import Header from './components/header/Header'
 import { useAuth } from './layout/auth/AuthContext'
 import Login from './layout/auth/Login'
+import OrderDetailView from './layout/application-form/order/OrderDetailView'
+import POSAdminSystem from './pos/app/PosApp'
 
 function AppAdmin() {
     const domainName = hostName();
@@ -254,7 +256,7 @@ function AppAdmin() {
     const administrator = () => {
         return (
             <>
-                <div className="app-container fixed w-full h-full flex flex-col">
+                <div className="app-container fixed-top w-full h-full flex flex-col">
                     <Header />
                     <Routes>
                         <Route path="/" element={<div className='p-2'><ManageOrder /></div>} />
@@ -291,6 +293,8 @@ function AppAdmin() {
                             <Route path={POSRoute.manageProduct} element={<ManageProuct />} />
                             <Route path={POSRoute.manageCategory} element={<CategorySection />} />
                         </Route>
+                        <Route path={POSRoute.manageOrder} element={<OrderDetailView />} />
+                        <Route path={POSRoute.pos} element={<POSAdminSystem />} />
                         <Route path="*" element={<>NOT FOUND</>} />
                     </Routes>
 

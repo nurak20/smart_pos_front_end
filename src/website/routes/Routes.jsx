@@ -82,6 +82,7 @@ export const POSRoute = {
     productDetailStatic: '/product-details',  // Rename the static route
     bestSellers: '/best-sellers',
     newArrivals: '/new-arrivals',
+    pos: '/pos',
     sale: '/sale',
     men: '/men',
     women: '/women',

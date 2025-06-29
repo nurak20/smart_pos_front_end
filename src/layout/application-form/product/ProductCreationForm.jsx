@@ -12,6 +12,8 @@ import FileUpload from '../../../website/components/text_field/FileUpload';
 import POSCommobox from '../../../website/components/search_dropdown/POSCommobox';
 import CustomCommoBox from '../../../components/select/CustomCommoBox';
 import BarcodeTextField from '../../../components/barcode/BarcodeTextField';
+import DoneIcon from '@mui/icons-material/Done';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 
 const initialValues = {
     category_id: '',
@@ -323,10 +325,12 @@ const ProductCreationForm = ({ onSuccess }) => {
                     <div className='flex end'>
                         <div className=''>
                             <Button
-
-                                style={{ background: StyleColors.componentsColor, }}
+                                sx={{ textTransform: 'none', fontWeight: '400', '&:hover': { backgroundColor: StyleColors.appBackground }, color: StyleColors.componentsColor }}
+                                startIcon={<CheckCircleIcon sx={{ color: StyleColors.componentsColor }} />}
                                 type="submit"
-                                className="pos-button pos-button--primary w-100 my-3 py-2 text-light px-3"
+                                variant='text'
+                                color='inherit'
+
                                 disabled={submitting}
                             >
                                 {submitting ? 'Creating...' : Translate(website.Label.CreateProduct)}

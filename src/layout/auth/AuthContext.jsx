@@ -27,7 +27,7 @@ export const AuthProvider = ({ children }) => {
                 setAuthorization(null);
             }
         } catch (error) {
-            console.error('Auth check error:', error);
+
             AuthService.logout();
             setIsAuthenticated(false);
             setUser(null);

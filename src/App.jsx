@@ -6,11 +6,18 @@ import AppWeb from './AppWeb'
 import Login from './layout/auth/Login';
 import { useAuth } from './layout/auth/AuthContext';
 import POSAdminSystem from './pos/app/PosApp';
+import { NoZoomFlutterView } from './flutter-view/NoZoom';
 function App() {
 
   if (import.meta.env.VITE_APP == "admin") {
     return (
-      <AppAdmin />
+      <>
+        <div className='fixed-top' style={{ height: '100vh', overflow: 'hidden' }}>
+          <AppAdmin />
+        </div>
+
+      </>
+
     )
   } else if (import.meta.env.VITE_APP == "web") {
     return (

@@ -20,13 +20,15 @@ import {
     ListItemButton,
     Paper
 } from '@mui/material';
+import DoneIcon from '@mui/icons-material/Done';
 import {
     IoChatbubbleEllipsesOutline,
     IoPersonOutline,
     IoSettingsOutline,
     IoHelpCircleOutline,
     IoLogOutOutline,
-    IoCloseOutline
+    IoCloseOutline,
+    IoKey
 } from 'react-icons/io5';
 import { StyleColors } from '../../website/extension/Extension';
 import LanguageSwitcher from '../../website/languages/LanguageSwitcher';
@@ -34,6 +36,8 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../layout/auth/AuthContext';
 import { ImageIcon, WorkflowIcon } from 'lucide-react';
 import { POS_GET } from '../../website/service/ApiService';
+import EditUserProfile from '../../layout/profile/EditUserProfile';
+import { FullscreenButton } from './ButtonFullScreen';
 
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -55,12 +59,9 @@ const Header = () => {
     };
     const navigate = useNavigate();
     const { user } = useAuth();
-    console.log(user);
-
     const menuItems = [
-        { icon: <IoPersonOutline size={24} />, text: 'Profile', action: () => console.log('Profile clicked') },
-        { icon: <IoSettingsOutline size={24} />, text: 'Settings', action: () => console.log('Settings clicked') },
-        { icon: <IoHelpCircleOutline size={24} />, text: 'Help & Support', action: () => console.log('Help clicked') },
+        { icon: <IoPersonOutline size={24} />, text: 'Edit Profile', action: () => setIsLogoutDialogOpen(true) },
+        { icon: <IoKey size={24} />, text: 'Change Password', action: () => null },
         { icon: <IoLogOutOutline size={24} />, text: 'Logout', action: () => logout() },
     ];
 
@@ -72,6 +73,22 @@ const Header = () => {
             setOrders(data.data);
         });
     }, []);
+    const userData = {
+        first_name: user.first_name,
+        last_name: user.last_name,
+        image_url: user.image_url
+    };
+
+    var elem = document.getElementById("myvideo");
+    function openFullscreen() {
+        if (elem.requestFullscreen) {
+            elem.requestFullscreen();
+        } else if (elem.webkitRequestFullscreen) { /* Safari */
+            elem.webkitRequestFullscreen();
+        } else if (elem.msRequestFullscreen) { /* IE11 */
+            elem.msRequestFullscreen();
+        }
+    }
 
 
     return (
@@ -90,6 +107,7 @@ const Header = () => {
                             textOverflow: 'ellipsis'
                         }}>RS Shopping</p>
                     </Button>
+
                 </div>
 
                 <div className='end'>
@@ -102,7 +120,7 @@ const Header = () => {
                             </span>
                         </div>
                     </div> */}
-                    <div className="app-defualt-user d-flex start px-2">
+                    {/* <div className="app-defualt-user d-flex start px-2">
                         <div style={{
                             width: 32,
                             height: 32,
@@ -118,16 +136,16 @@ const Header = () => {
                         >
                             <NotificationsNoneIcon style={{ fontSize: 20, color: 'grey' }} />
                         </div>
-                    </div>
-
+                    </div> */}
                     <LanguageSwitcher />
+
 
 
                     <div className="app-defualt-user d-flex start px-2 py-1">
                         <Avatar
                             alt="Remy Sharp"
-                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ1dxWcWXGNh_rO1UCfYKTy9TfPLwsTd6ilJw&s"
-                            sx={{ width: 32, height: 32, cursor: 'pointer' }}
+                            src={user?.image_url}
+                            sx={{ width: 25, height: 25, cursor: 'pointer' }}
                             onClick={handleAvatarClick}
                         />
                     </div>
@@ -147,24 +165,32 @@ const Header = () => {
                     }
                 }}
             >
-                {/* Close Button */}
-                <Box sx={{ position: 'absolute', top: 16, right: 16, zIndex: 1 }}>
-                    <IconButton
-                        edge="start"
-                        color="inherit"
-                        onClick={handleCloseDialog}
-                        aria-label="close"
-                        sx={{
-                            color: 'white',
-                            backgroundColor: 'rgba(75, 10, 44, 0.2)',
-                            '&:hover': {
-                                backgroundColor: 'rgba(75, 10, 44, 0.5)',
-                            }
-                        }}
-                    >
-                        <IoCloseOutline size={24} />
-                    </IconButton>
-                </Box>
+                <div className='flex justify-content-between align-items-center gap-2 w-100 p-2'>
+                    <div className="">
+                        <Button variant='text' className='gap-2' onClick={() => setIsLogoutDialogOpen(false)}>
+                            <Avatar
+                                alt='image'
+                                src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ1dxWcWXGNh_rO1UCfYKTy9TfPLwsTd6ilJw&s'
+                            />
+                            <p className='text-sm' style={{ textTransform: 'capitalize', color: StyleColors.componentsColor, fontWeight: '400' }}>
+                                RS Shopping management system
+                            </p>
+                        </Button>
+                    </div>
+                    <div>
+                        <IconButton
+                            edge="start"
+                            color="inherit"
+                            onClick={handleCloseDialog}
+                            aria-label="close"
+                            sx={{
+                                color: StyleColors.componentsColor,
+                            }}
+                        >
+                            <IoCloseOutline size={24} />
+                        </IconButton>
+                    </div>
+                </div>
 
                 <DialogContent sx={{
                     display: 'flex',
@@ -177,11 +203,11 @@ const Header = () => {
                 }}>
                     {/* User Avatar */}
                     <Avatar
-                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ1dxWcWXGNh_rO1UCfYKTy9TfPLwsTd6ilJw&s"
+                        src={user?.image_url}
                         alt="User Profile"
                         sx={{
-                            width: 120,
-                            height: 120,
+                            width: 200,
+                            height: 200,
                             marginBottom: 3,
                             border: '4px solid rgba(255, 255, 255, 0.3)',
                             boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3)'
@@ -190,14 +216,9 @@ const Header = () => {
 
                     {/* User Info */}
                     <Typography variant="h4" sx={{ fontWeight: 'bold', marginBottom: 1, color: StyleColors.componentsColor }}>
-                        {user?.username}
+                        {user?.first_name} {user?.last_name}
                     </Typography>
-                    <Typography variant="h6" sx={{ opacity: 0.8, marginBottom: 1, color: StyleColors.componentsColor }}>
-                        Administrator
-                    </Typography>
-                    <Typography variant="body1" sx={{ opacity: 0.7, marginBottom: 4, color: StyleColors.componentsColor }}>
-                        {user?.email}
-                    </Typography>
+
 
                     <Divider sx={{ width: '100%', maxWidth: 400, marginBottom: 3, backgroundColor: 'rgba(255, 255, 255, 0.3)' }} />
 
@@ -210,7 +231,7 @@ const Header = () => {
                                     button
                                     onClick={() => {
                                         item.action();
-                                        handleCloseDialog();
+
                                     }}
                                     sx={{
                                         cursor: 'pointer',
@@ -254,18 +275,18 @@ const Header = () => {
             </Dialog>
 
             <Dialog fullScreen open={isLogoutDialogOpen} onClose={() => setIsLogoutDialogOpen(false)} TransitionComponent={Transition} >
-                <div className='h-full' style={{ backgroundColor: StyleColors.appBackground }}>
-                    <div className='w-full flex justify-between items-center px-2'>
-                        <div className="start">
-                            <IconButton variant='text' className='start gap-2' onClick={() => navigate('/')}>
+                <div className='w-full h-full' style={{ backgroundColor: StyleColors.appBackground }}>
+                    <div className='w-full flex justify-between items-center px-2' style={{ backgroundColor: StyleColors.appBackground }}>
+                        <div className="flex gap-2">
+                            <Button variant='text' className='gap-2' onClick={() => setIsLogoutDialogOpen(false)}>
                                 <Avatar
                                     alt='image'
                                     src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ1dxWcWXGNh_rO1UCfYKTy9TfPLwsTd6ilJw&s'
                                 />
-                                <p >
+                                <p className='text-sm' style={{ textTransform: 'capitalize', color: StyleColors.componentsColor, fontWeight: '400' }}>
                                     RS Shopping management system
                                 </p>
-                            </IconButton>
+                            </Button>
                         </div>
                         <Box>
                             <IconButton
@@ -274,45 +295,15 @@ const Header = () => {
                                 onClick={() => setIsLogoutDialogOpen(false)}
                                 aria-label="close"
                                 sx={{
-                                    color: 'white',
-                                    backgroundColor: 'rgba(75, 10, 44, 0.2)',
-                                    '&:hover': {
-                                        backgroundColor: 'rgba(75, 10, 44, 0.5)',
-                                    }
+                                    color: StyleColors.componentsColor,
+                                    transition: 'all 0.5s ease',
                                 }}
                             >
                                 <IoCloseOutline size={24} />
                             </IconButton>
                         </Box>
                     </div>
-
-                    <div className='center mt-5'>
-                        <List
-                            sx={{ maxWidth: 1200, backgroundColor: StyleColors.appBackground }}>
-
-                            {
-                                orders.map((order, index) =>
-                                    order.order_status_sate == null ?
-                                        <ListItemButton className='bg-white mb-2'>
-                                            <ListItemAvatar>
-                                                <Paper className='center' sx={{ height: 120, width: 120, borderRadius: "50%", border: "2px solid rgb(37, 176, 74)", backgroundColor: "white", }}>
-                                                    <Avatar sx={{ height: 100, width: 100, }} src='https://png.pngtree.com/png-clipart/20240709/original/pngtree-casual-man-flat-design-avatar-profile-picture-vector-png-image_15526568.png'>
-                                                        <ImageIcon />
-                                                    </Avatar>
-                                                </Paper>
-                                            </ListItemAvatar>
-                                            <ListItemText className='ps-3' primary="Chan Dara" secondary='Thank you for your order! Since this is a larger request, it may take a bit more time to prepare. We appreciate your patience and will make sure everything is handled with care!"
-
-Let me know if you want it to sound more formal, friendly, or specific to a product or service.' />
-                                        </ListItemButton> : null
-                                )
-                            }
-
-
-
-                        </List>
-                    </div>
-
+                    <EditUserProfile userData={userData} onSuccess={() => setIsLogoutDialogOpen(false)} onCancel={() => setIsLogoutDialogOpen(false)} />
                 </div>
             </Dialog>
         </>

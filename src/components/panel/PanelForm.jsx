@@ -6,7 +6,7 @@ import { StyleColors, Translate } from '../../website/extension/Extension';
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import SkeletonGrid from './ShimmerAnimate';
-
+import AddCircleIcon from '@mui/icons-material/AddCircle';
 
 function SlideTransition(props) {
     return <Slide {...props} direction="up" />;
@@ -63,14 +63,14 @@ const PanelSection = ({
             <div className="flex items-center justify-between p-4 border-b">
                 <div className="flex items-center gap-3">
                     {TitleIcon && <TitleIcon size={28} color={StyleColors.appDarkText} />}
-                    <h2 className="text-2xl">
+                    <p className="text-xxl">
                         {Translate(title)}
-                    </h2>
+                    </p>
                 </div>
 
                 <Button
-                    variant="outlined"
-                    startIcon={showForm ? <Close /> : <Add />}
+                    variant="text"
+
                     onClick={isLoading ? null : toggleForm}
                     sx={{
                         textTransform: 'none',
@@ -83,7 +83,10 @@ const PanelSection = ({
                         }
                     }}
                 >
-                    {showForm ? Translate({ km: 'បោះបង់', en: "Cancel" }) : Translate({ km: 'បង្កើតថ្មី', en: "Add New" })}
+                    <div className='center'>
+                        {showForm ? <Close /> : <AddCircleIcon />}
+                        <span className='hidden sm:block ps-1'>{showForm ? Translate({ km: 'បោះបង់', en: "Cancel" }) : Translate({ km: 'បង្កើតថ្មី', en: "Add New" })}</span>
+                    </div>
                 </Button>
             </div>
 

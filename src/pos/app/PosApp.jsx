@@ -4,7 +4,6 @@ import {
     AppBar,
     Toolbar,
     Typography,
-    Grid,
     Card,
     CardContent,
     CardMedia,
@@ -28,8 +27,11 @@ import {
     MenuItem,
     Box,
     Container,
-    Paper
+    Paper,
+    Grid2,
+    Avatar
 } from '@mui/material';
+import Grid from '@mui/material/Grid';
 import {
     Add,
     Remove,
@@ -41,6 +43,12 @@ import {
     Inventory
 } from '@mui/icons-material';
 import { POS_GET, POS_POST } from '../../website/service/ApiService';
+import { StyleColors } from '../../website/extension/Extension';
+import LanguageSwitcher from '../../website/languages/LanguageSwitcher';
+import { CheckCircle } from 'lucide-react';
+import { useAuth } from '../../layout/auth/AuthContext';
+import { useNavigate } from 'react-router-dom';
+import PowerSettingsNewIcon from '@mui/icons-material/PowerSettingsNew';
 
 // Product Service Provider - Clean, professional code structure
 class ProductService {
@@ -86,10 +94,9 @@ class ProductService {
 // Payment Service Provider
 class PaymentService {
     static paymentMethods = [
-        { id: 'cash', name: 'Cash', icon: '💵' },
-        { id: 'card', name: 'Credit/Debit Card', icon: '💳' },
-        { id: 'mobile', name: 'Mobile Payment', icon: '📱' },
-        { id: 'bank', name: 'Bank Transfer', icon: '🏦' }
+        { id: 'cash', name: 'Cash', icon: '💵', src: "https://www.usatoday.com/gcdn/-mm-/e76b3f8780406e2332171b90051c86d67cb0349b/c=0-85-2122-1282/local/-/media/USATODAY/USATODAY/2014/09/04/1409858217000-492529263.jpg?width=2122&height=1197&fit=crop&format=pjpg&auto=webp" },
+
+        { id: 'ac', name: 'ACLEDA Bank Plc. - Cambodia', src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRM37KLHTgu31C4LMRGMBzIu7QwwJXVeOC-EA&s' },
     ];
 
     static getPaymentMethods() {
@@ -110,10 +117,13 @@ export default function POSAdminSystem() {
     const [searchQuery, setSearchQuery] = useState('');
     const [sellList, setSellList] = useState([]);
     const [paymentDialog, setPaymentDialog] = useState(false);
-    const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('');
+    const [selectedPaymentMethod, setSelectedPaymentMethod] = useState([]);
     const [allProducts, setAllProducts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [processingPayment, setProcessingPayment] = useState(false);
+    const navigate = useNavigate();
+
+    const { user } = useAuth();
 
     // Load cart from cookies on initial render
     useEffect(() => {
@@ -240,7 +250,7 @@ export default function POSAdminSystem() {
                     order_status_text: "Order confirmed",
                     order_status_state: "confirmed",
                     payment_status: "completed",
-                    payment_type: selectedPaymentMethod.toLowerCase().replace(/[^a-z]/g, '_'),
+                    payment_type: selectedPaymentMethod?.join(', '),
                     discount_amount: 0.00,
                     event_discount_id: null,
                     sub_total: totalAmount
@@ -265,11 +275,10 @@ export default function POSAdminSystem() {
             // Send order to API
             const response = await POS_POST('v1/order/invoice', orderData);
 
-            if (response.ok) {
-                const result = await response.data;
-                alert(`Payment processed successfully via ${selectedPaymentMethod}!\nOrder ID: ${result.order_id || 'Generated'}\nTotal: ${totalAmount.toFixed(2)}\nItems: ${totalItems}`);
+            if (response) {
+                sendOrderNotification(response);
                 clearCart();
-                setSelectedPaymentMethod('');
+                setSelectedPaymentMethod([]);
             } else {
                 const errorData = await response.json();
                 throw new Error(errorData.message || 'Failed to process order');
@@ -288,271 +297,565 @@ export default function POSAdminSystem() {
             </div>
         );
     }
+    const sendOrderNotification = async (orderResponse) => {
+        const order = orderResponse.data.order_info;
+        const items = orderResponse.data.order_details;
+
+        // Format currency values
+        const formatCurrency = (amount) => parseFloat(amount).toFixed(2);
+        const formatRiel = (amount) => new Intl.NumberFormat('en-US').format(parseFloat(amount));
+
+        // Build items list
+        const itemsList = items.map(item => `
+            🛒 <b>${item.product_code}</b>
+            ├─ Quantity: ${item.qty}
+            ├─ Price: $${formatCurrency(item.price)}
+            ${item.discount ? `├─ Discount: ${item.discount}${item.discount_unit === 'percentage' ? '%' : ''}` : ''}
+            └─ Subtotal: $${formatCurrency(item.sub_total)}
+            `).join('\n');
+
+        // Calculate total items
+        const totalItems = items.reduce((sum, item) => sum + item.qty, 0);
+
+        // Create management link
+        const manageLink = `https://admin.txteams.net/manage-order?order=${order.order_id}`;
+
+        // Compose the message
+        const message = `
+            <b>🛍️ NEW ORDER #${order.order_id.slice(0, 8).toUpperCase()}</b>
+            ━━━━━━━━━━━━━━━━━━━━━
+            <b>📅 Order Date:</b> ${new Date(order.order_date).toLocaleString()}
+            <b>🔄 Status:</b> ${order.order_status_text} (${order.order_status_state})
+            <b>💳 Payment:</b> ${order.payment_type.replace('_', ' ').toUpperCase()} • ${order.payment_status.toUpperCase()}
+
+            <b>📦 ORDER ITEMS (${totalItems})</b>
+            ${itemsList}
+
+            <b>💰 ORDER SUMMARY</b>
+            ├─ Subtotal: $${formatCurrency(order.sub_total)}
+            ├─ Discount: $${formatCurrency(order.discount_amount)}
+            ├─ Delivery: $${formatCurrency(order.delivery_cost)}
+            ├─ Exchange Rate: ៛${formatCurrency(order.exchange_rate)}/$
+            └─ <b>TOTAL: $${formatCurrency(order.total_amount_usd)} (៛${formatRiel(order.total_amount_riel)})</b>
+
+            <b>🚚 Delivery Status:</b> ${order.delivery_status.toUpperCase()} ${order.delivery_completed ? '✅' : '🕒'}
+            <b>📝 Notes:</b> ${order.description || 'No additional notes'}
+
+            <a href="${manageLink}">🔗 Manage This Order</a>
+
+            <i>Order created at: ${new Date(order.created_date).toLocaleString()}</i>
+            `;
+
+        const res = await POS_POST('telegram/send-message', {
+            chatId: "1415543660",
+            message: message,
+            parseMode: "HTML"
+        });
+        const res2 = await POS_POST('telegram/send-message', {
+            chatId: "5006388556",
+            message: message,
+            parseMode: "HTML"
+        });
+
+        return res;
+    };
+
 
     return (
-        <div className="min-h-screen bg-gray-50">
+        <div className="min-h-screen w-full fixed-top">
             {/* Header */}
-            <AppBar position="static" className="bg-gradient-to-r from-blue-600 to-purple-600">
-                <Toolbar>
-                    <ShoppingCart className="mr-2" />
-                    <Typography variant="h6" className="flex-grow">
-                        POS Admin System
-                    </Typography>
-                    <Badge badgeContent={totalItems} color="error">
-                        <IconButton color="inherit" onClick={() => setPaymentDialog(true)}>
-                            <Payment />
-                        </IconButton>
-                    </Badge>
+            <AppBar position="static" sx={{ backgroundColor: StyleColors.componentsColor }}>
+                <Toolbar sx={{ minHeight: { xs: 56, sm: 64 } }} className='flex items-center justify-between'>
+                    <IconButton variant='text' onClick={() => navigate(-1)} sx={{ color: "white" }} className='flex'>
+                        <PowerSettingsNewIcon />
+                    </IconButton>
+
+                    {/* Mobile: Show cart badge and payment button */}
+                    <div className='flex'>
+                        <Badge badgeContent={totalItems} color="error" className='md:hidden'>
+                            <IconButton color="inherit" onClick={() => setPaymentDialog(true)}>
+                                <Payment sx={{ fontSize: { xs: 20, md: 24 } }} />
+                            </IconButton>
+                        </Badge>
+
+                        {/* Desktop: Show full header items */}
+                        <Box className="hidden md:flex md:items-center">
+                            <Box className="px-2">
+                                <LanguageSwitcher isShowBorder={true} />
+                            </Box>
+                            <Avatar
+                                src={user.image_url}
+                                sx={{ width: { xs: 20, md: 25 }, height: { xs: 20, md: 25 }, border: '1px solid white', ml: 1 }}
+                            />
+                            <Typography variant="body2" className="px-2 hidden lg:block">
+                                {user.first_name} {user.last_name}
+                            </Typography>
+                        </Box>
+                    </div>
                 </Toolbar>
             </AppBar>
 
-            <Container maxWidth="xl" className="py-4">
-                <Grid container spacing={3}>
+            <Container maxWidth="xl" sx={{ py: { xs: 1, md: 2 }, px: { xs: 1, md: 3 } }}>
+                <Grid2 container spacing={{ xs: 1, md: 3 }}>
                     {/* Left Panel - Products */}
-                    <Grid item xs={12} lg={8}>
-                        {/* Search Bar */}
-                        <Paper className="p-4 mb-4">
-                            <TextField
-                                fullWidth
-                                variant="outlined"
-                                placeholder="Search products by name, brand, code, or description..."
-                                value={searchQuery}
-                                onChange={(e) => setSearchQuery(e.target.value)}
-                                InputProps={{
-                                    startAdornment: <Search className="mr-2 text-gray-400" />
+                    <Grid2
+                        size={{ xs: 12, md: 8, lg: 8 }}
+                        sx={{
+                            backgroundColor: "white",
+                            borderRadius: "10px",
+                            p: { xs: 1, md: 2 }
+                        }}
+                    >
+                        {/* Category Filters - Horizontal scroll on mobile */}
+                        <Box sx={{ p: { xs: 1, md: 2 } }}>
+                            <Box
+                                sx={{
+                                    display: "flex",
+                                    gap: 1,
+                                    mb: 2,
+                                    overflowX: "auto",
+                                    pb: 1,
+                                    "&::-webkit-scrollbar": {
+                                        height: "4px"
+                                    },
+                                    "&::-webkit-scrollbar-thumb": {
+                                        backgroundColor: "rgba(0,0,0,0.2)",
+                                        borderRadius: "2px"
+                                    }
                                 }}
-                                className="mb-4"
-                            />
-
-                            {/* Categories */}
-                            <div className="flex flex-wrap gap-2 mb-4">
+                            >
                                 {ProductService.getCategories().map((category) => (
-                                    <Chip
+                                    <Box
                                         key={category.id}
-                                        label={category.name}
+                                        className='py-2 px-3 rounded-[8px] whitespace-nowrap'
                                         onClick={() => setSelectedCategory(category.id)}
-                                        color={selectedCategory === category.id ? "primary" : "default"}
-                                        variant={selectedCategory === category.id ? "filled" : "outlined"}
-                                        className="text-sm md:text-base cursor-pointer"
-                                        style={{
-                                            backgroundColor: selectedCategory === category.id ? category.color : 'transparent',
-                                            borderColor: category.color
+                                        sx={{
+                                            fontSize: { xs: "0.75rem", sm: "0.875rem", md: "1rem" },
+                                            cursor: "pointer",
+                                            backgroundColor: selectedCategory === category.id ? StyleColors.backgroundText : "white",
+                                            borderColor: category.color,
+
+                                            minWidth: "fit-content",
+                                            flexShrink: 0
                                         }}
-                                    />
+                                    >
+                                        {category.name}
+                                    </Box>
                                 ))}
-                            </div>
-                        </Paper>
+                            </Box>
+                        </Box>
 
                         {/* Products Grid */}
-                        <Grid container spacing={2}>
+                        <Grid2
+                            container
+                            spacing={{ xs: 1, sm: 1.5, md: 2 }}
+                            sx={{
+                                maxHeight: { xs: "calc(100vh - 200px)", md: "calc(100vh - 220px)" },
+                                overflowY: "auto",
+                                scrollbarWidth: "none",
+                                "&::-webkit-scrollbar": {
+                                    display: "none"
+                                },
+                                msOverflowStyle: "none",
+                                px: { xs: 1, md: 2 }
+                            }}
+                        >
                             {filteredProducts.length === 0 ? (
-                                <Grid item xs={12}>
-                                    <Typography variant="h6" className="text-center text-gray-500 py-8">
+                                <Grid2 xs={12}>
+                                    <Typography
+                                        variant="h6"
+                                        sx={{
+                                            textAlign: "center",
+                                            color: "text.secondary",
+                                            py: 4,
+                                            fontSize: { xs: "1rem", md: "1.25rem" }
+                                        }}
+                                    >
                                         {searchQuery ? `No products found for "${searchQuery}"` : 'No products available'}
                                     </Typography>
-                                </Grid>
+                                </Grid2>
                             ) : (
                                 filteredProducts.map((product) => (
-                                    <Grid item xs={6} sm={4} md={3} lg={2} key={product.code}>
+                                    <Grid2 key={product.code} size={{ xs: 6, sm: 4, md: 4, lg: 3 }}>
                                         <Card
-                                            className="h-full cursor-pointer transform transition-transform hover:scale-105 shadow-md hover:shadow-lg"
+                                            elevation={0}
+                                            sx={{
+                                                height: "100%",
+                                                cursor: "pointer",
+                                                transition: "transform 0.2s, box-shadow 0.2s",
+                                                border: "1px solid",
+                                                borderColor: "grey.200",
+                                                "&:hover": {
+                                                    transform: "translateY(-2px)",
+                                                    boxShadow: 3
+                                                },
+                                                "&:active": {
+                                                    transform: "translateY(0px)"
+                                                }
+                                            }}
                                             onClick={() => addToSellList(product)}
                                         >
                                             <CardMedia
                                                 component="img"
-                                                height="120"
-                                                image={product.image_url || product.image_display_group || 'https://via.placeholder.com/150x150/cccccc/ffffff?text=No+Image'}
+                                                image={product.image_url || 'https://via.placeholder.com/150'}
                                                 alt={product.product_name}
-                                                className="h-24 md:h-32 object-cover"
-                                                onError={(e) => {
-                                                    e.target.src = 'https://via.placeholder.com/150x150/cccccc/ffffff?text=No+Image';
+                                                sx={{
+                                                    height: { xs: 80, sm: 120, md: 160, lg: 180 },
+                                                    objectFit: "cover"
                                                 }}
+                                                onError={(e) => (e.target.src = 'https://via.placeholder.com/150')}
                                             />
-                                            <CardContent className="p-2 md:p-3">
-                                                <Typography variant="body2" className="font-semibold text-xs md:text-sm mb-1 line-clamp-2">
+                                            <CardContent sx={{ p: { xs: 1, sm: 1.5, md: 2 } }}>
+                                                <Typography
+                                                    variant="body2"
+                                                    fontWeight="medium"
+                                                    sx={{
+                                                        display: "-webkit-box",
+                                                        WebkitLineClamp: 2,
+                                                        WebkitBoxOrient: "vertical",
+                                                        overflow: "hidden",
+                                                        mb: 1,
+                                                        fontSize: { xs: "0.75rem", sm: "0.875rem", md: "0.875rem" },
+                                                        lineHeight: { xs: 1.2, md: 1.4 }
+                                                    }}
+                                                >
                                                     {product.product_name}
                                                 </Typography>
-
-                                                <Typography variant="h6" className="text-green-600 text-sm md:text-base">
+                                                <Typography
+                                                    variant="h6"
+                                                    color="success.main"
+                                                    sx={{
+                                                        fontSize: { xs: "0.875rem", sm: "1rem", md: "1.1rem" },
+                                                        fontWeight: "bold"
+                                                    }}
+                                                >
                                                     ${parseFloat(product.selling_price || 0).toFixed(2)}
                                                 </Typography>
-                                                <Typography variant="caption" className="text-gray-500 text-xs block">
+                                                <Typography
+                                                    variant="caption"
+                                                    color="text.secondary"
+                                                    display="block"
+                                                    sx={{ fontSize: { xs: "0.65rem", md: "0.75rem" } }}
+                                                >
                                                     Stock: {product.stock || 0}
                                                 </Typography>
-
                                             </CardContent>
                                         </Card>
-                                    </Grid>
+                                    </Grid2>
                                 ))
                             )}
-                        </Grid>
-                    </Grid>
+                        </Grid2>
+                    </Grid2>
 
-                    {/* Right Panel - Sell List */}
-                    <Grid item xs={12} lg={4}>
-                        <Paper className="p-4 sticky top-4">
-                            <Typography variant="h6" className="mb-4 flex items-center">
-                                <ShoppingCart className="mr-2" />
+                    {/* Right Panel - Sell List (Desktop Only) */}
+                    <Grid2 size={{ md: 4, lg: 4 }} className="hidden md:block" >
+                        <Paper
+                            sx={{
+                                p: 2,
+                                position: "sticky",
+                                top: 16,
+                                borderRadius: "10px",
+                                backgroundColor: "white",
+                                minHeight: '800px',
+                                maxHeight: "calc(100vh - 120px)",
+                                display: "flex",
+                                flexDirection: "column"
+                            }}
+                            elevation={0}
+                        >
+                            <Typography variant="h6" sx={{ mb: 2, display: "flex", alignItems: "center" }}>
+                                <ShoppingCart sx={{ mr: 1 }} />
                                 Sell List ({totalItems} items)
                             </Typography>
 
                             {sellList.length === 0 ? (
-                                <Typography variant="body2" className="text-gray-500 text-center py-8">
-                                    No items in sell list
-                                </Typography>
+                                <div className='h-100 flex flex-col justify-center items-center center'>
+
+
+                                </div>
                             ) : (
-                                <>
-                                    <List className="max-h-96 overflow-y-auto">
-                                        {sellList.map((item) => (
-                                            <div key={item.code}>
-                                                <ListItem className="px-0">
-                                                    <ListItemText
-                                                        primary={item.product_name}
-                                                        secondary={
-                                                            <div>
-                                                                <div>${parseFloat(item.selling_price || 0).toFixed(2)} each</div>
-
-                                                            </div>
-                                                        }
-                                                        className="flex-grow"
-                                                    />
-                                                    <ListItemSecondaryAction className="flex items-center gap-2">
-                                                        <IconButton
-                                                            size="small"
-                                                            onClick={() => updateQuantity(item.code, item.quantity - 1)}
-                                                            className="p-1"
-                                                        >
-                                                            <Remove fontSize="small" />
-                                                        </IconButton>
-                                                        <span className="mx-2 min-w-8 text-center">{item.quantity}</span>
-                                                        <IconButton
-                                                            size="small"
-                                                            onClick={() => updateQuantity(item.code, item.quantity + 1)}
-                                                            className="p-1"
-                                                        >
-                                                            <Add fontSize="small" />
-                                                        </IconButton>
-                                                        <IconButton
-                                                            size="small"
-                                                            onClick={() => removeFromSellList(item.code)}
-                                                            className="p-1 text-red-500"
-                                                        >
-                                                            <Delete fontSize="small" />
-                                                        </IconButton>
-                                                    </ListItemSecondaryAction>
-                                                </ListItem>
-                                                <Typography variant="body2" className="text-right text-gray-600 mr-4 mb-2">
-                                                    Subtotal: ${(parseFloat(item.selling_price || 0) * item.quantity).toFixed(2)}
-                                                </Typography>
-                                                <Divider />
-                                            </div>
-                                        ))}
-                                    </List>
-
-                                    <Box className="mt-4 p-3 bg-gray-100 rounded">
-                                        <Typography variant="h6" className="flex justify-between mb-2">
-                                            <span>Total Items:</span>
-                                            <span>{totalItems}</span>
-                                        </Typography>
-                                        <Typography variant="h5" className="flex justify-between font-bold text-green-600">
-                                            <span>Total Amount:</span>
-                                            <span>${totalAmount.toFixed(2)}</span>
-                                        </Typography>
-                                    </Box>
-
-                                    <Button
-                                        fullWidth
-                                        variant="contained"
-                                        size="large"
-                                        onClick={() => setPaymentDialog(true)}
-                                        className="mt-4 bg-gradient-to-r from-green-500 to-blue-500 text-white"
-                                        startIcon={<Payment />}
-                                    >
-                                        Process Payment
-                                    </Button>
-
-                                    <Button
-                                        fullWidth
-                                        variant="outlined"
-                                        color="error"
-                                        onClick={clearCart}
-                                        className="mt-2"
-                                        startIcon={<Delete />}
-                                    >
-                                        Clear Cart
-                                    </Button>
-                                </>
+                                <List sx={{ flexGrow: 1, overflowY: "auto", maxHeight: "500px" }}>
+                                    {sellList.map((item) => (
+                                        <div key={item.code}>
+                                            <ListItem sx={{ px: 0 }}>
+                                                <ListItemText
+                                                    primary={item.product_name}
+                                                    secondary={`$${parseFloat(item.selling_price || 0).toFixed(2)} each`}
+                                                    sx={{ flexGrow: 1 }}
+                                                />
+                                                <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                                                    <IconButton size="small" onClick={() => updateQuantity(item.code, item.quantity - 1)}>
+                                                        <Remove fontSize="small" />
+                                                    </IconButton>
+                                                    <Typography component="span" sx={{ mx: 1, minWidth: 32, textAlign: "center" }}>
+                                                        {item.quantity}
+                                                    </Typography>
+                                                    <IconButton size="small" onClick={() => updateQuantity(item.code, item.quantity + 1)}>
+                                                        <Add fontSize="small" />
+                                                    </IconButton>
+                                                    {/* <IconButton size="small" onClick={() => removeFromSellList(item.code)} sx={{ color: "error.main" }}>
+                                    <Delete fontSize="small" />
+                                </IconButton> */}
+                                                </Box>
+                                            </ListItem>
+                                            <Typography variant="body2" color="text.secondary" sx={{ textAlign: "right", mr: 2, mb: 1 }}>
+                                                Subtotal: ${(parseFloat(item.selling_price || 0) * item.quantity).toFixed(2)}
+                                            </Typography>
+                                            <Divider />
+                                        </div>
+                                    ))}
+                                </List>
                             )}
+
+                            {/* Spacer to push payment section to bottom */}
+                            {
+                                sellList.length > 0 ? <Box sx={{ flexGrow: 1 }} /> : <Box sx={{ flexGrow: 1 }} className="center">
+                                    <Typography variant="body2" color="text.secondary" sx={{ textAlign: "center", py: 4 }}>
+                                        No items in sell list
+                                    </Typography>
+                                </Box>
+                            }
+
+                            {/* Payment Section - Always at bottom */}
+                            <Box sx={{ mt: 2, p: 2, bgcolor: "grey.100", borderRadius: 1 }}>
+                                <Typography variant="h6" sx={{ display: "flex", justifyContent: "space-between", mb: 1 }}>
+                                    <span>Total Items:</span>
+                                    <span>{totalItems}</span>
+                                </Typography>
+                                <Typography variant="h5" fontWeight="bold" color="success.main" sx={{ display: "flex", justifyContent: "space-between" }}>
+                                    <span>Total Amount:</span>
+                                    <span>${totalAmount.toFixed(2)}</span>
+                                </Typography>
+                            </Box>
+
+                            <Button
+                                fullWidth
+
+                                className='py-3'
+                                variant="contained"
+                                size="large"
+                                disabled={(sellList.length === 0)}
+                                onClick={() => setPaymentDialog(true)}
+                                sx={{
+                                    mt: 2,
+                                    background: StyleColors.componentsColor,
+                                    color: "white"
+                                }}
+                                startIcon={<Payment />}
+                            >
+                                Payment
+                            </Button>
+
+
+
                         </Paper>
-                    </Grid>
-                </Grid>
+                    </Grid2>
+                </Grid2>
             </Container>
 
-            {/* Payment Dialog */}
+            {/* Mobile Bottom Cart Summary */}
+            <Box
+                className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t shadow-lg z-50"
+                sx={{ p: 2 }}
+            >
+                {sellList.length > 0 && (
+                    <Box sx={{ mb: 2 }}>
+                        <Typography variant="body2" color="text.secondary" sx={{ textAlign: "center" }}>
+                            {totalItems} items • ${totalAmount.toFixed(2)}
+                        </Typography>
+                    </Box>
+                )}
+                <Box sx={{ display: "flex", gap: 1 }}>
+                    {sellList.length > 0 && (
+                        <Button
+                            variant="outlined"
+                            color="error"
+                            onClick={clearCart}
+                            sx={{ minWidth: "auto", px: 2 }}
+                        >
+                            <Delete fontSize="small" />
+                        </Button>
+                    )}
+                    <Button
+                        fullWidth
+                        variant="contained"
+                        onClick={() => setPaymentDialog(true)}
+                        disabled={sellList.length === 0}
+                        sx={{
+                            background: StyleColors.componentsColor,
+                            color: "white"
+                        }}
+                        startIcon={<Payment />}
+                    >
+                        {sellList.length === 0 ? 'Cart Empty' : `Pay $${totalAmount.toFixed(2)}`}
+                    </Button>
+                </Box>
+            </Box>
+
+            {/* Add bottom padding for mobile to account for fixed bottom bar */}
+            <Box className="md:hidden" sx={{ height: "80px" }} />
+
+            {/* Payment Dialog - Enhanced for mobile */}
             <Dialog
                 open={paymentDialog}
                 onClose={() => setPaymentDialog(false)}
-                maxWidth="sm"
                 fullWidth
-                className="md:max-w-md"
+                maxWidth="sm"
+                fullScreen={window.innerWidth < 600} // Full screen on mobile
             >
-                <DialogTitle className="text-center">
+                <DialogTitle
+                    className="text-center"
+                    sx={{
+                        fontSize: { xs: "1.25rem", md: "1.5rem" },
+                        pb: { xs: 1, md: 2 }
+                    }}
+                >
                     <Payment className="mr-2" />
                     Process Payment
                 </DialogTitle>
-                <DialogContent>
+                <DialogContent sx={{ px: { xs: 2, md: 3 } }}>
                     <Box className="mb-4 p-3 bg-gray-50 rounded">
-                        <Typography variant="h6" className="mb-2">Order Summary:</Typography>
-                        <Typography>Total Items: {totalItems}</Typography>
-                        <Typography variant="h5" className="font-bold text-green-600">
+                        <Typography variant="h6" className="mb-2" sx={{ fontSize: { xs: "1rem", md: "1.25rem" } }}>
+                            Order Summary:
+                        </Typography>
+                        <Typography sx={{ fontSize: { xs: "0.875rem", md: "1rem" } }}>
+                            Total Items: {totalItems}
+                        </Typography>
+                        <Typography
+                            variant="h5"
+                            className="font-bold text-green-600"
+                            sx={{ fontSize: { xs: "1.25rem", md: "1.5rem" } }}
+                        >
                             Total Amount: ${totalAmount.toFixed(2)}
                         </Typography>
                     </Box>
 
-                    <FormControl fullWidth className="mb-4">
-                        <InputLabel>Payment Method</InputLabel>
-                        <Select
-                            value={selectedPaymentMethod}
-                            onChange={(e) => setSelectedPaymentMethod(e.target.value)}
-                            label="Payment Method"
-                        >
-                            {PaymentService.getPaymentMethods().map((method) => (
-                                <MenuItem key={method.id} value={method.name}>
-                                    <span className="mr-2">{method.icon}</span>
-                                    {method.name}
-                                </MenuItem>
+                    {selectedPaymentMethod?.length > 0 && (
+                        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, mt: 1, mb: 2 }}>
+                            {selectedPaymentMethod.map((methodName) => (
+                                <Chip
+                                    avatar={<Avatar src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRM37KLHTgu31C4LMRGMBzIu7QwwJXVeOC-EA&s' />}
+                                    key={methodName}
+                                    label={methodName}
+                                    variant='outlined'
+                                    size={window.innerWidth < 600 ? "small" : "medium"}
+                                    sx={{
+                                        color: 'dark',
+                                        '& .MuiChip-icon': {
+                                            color: 'success.main',
+                                            marginLeft: '8px',
+                                            fontSize: '18px'
+                                        }
+                                    }}
+                                />
                             ))}
-                        </Select>
-                    </FormControl>
+                        </Box>
+                    )}
+
+                    <Typography variant="subtitle2" sx={{ mb: 1, fontSize: { xs: "0.875rem", md: "1rem" } }}>
+                        Select Payment Methods:
+                    </Typography>
+                    <List
+                        className="max-h-[200px] overflow-y-auto bg-gray-50 rounded mb-3"
+                        sx={{
+                            maxHeight: { xs: "150px", md: "200px" }
+                        }}
+                    >
+                        {PaymentService.getPaymentMethods().map((method) => (
+                            <MenuItem
+                                key={method.id}
+                                value={method.name}
+                                className='py-2'
+                                sx={{
+                                    py: { xs: 1, md: 1.5 },
+                                    fontSize: { xs: "0.875rem", md: "1rem" }
+                                }}
+                                onClick={() =>
+                                    setSelectedPaymentMethod(prev =>
+                                        prev.includes(method.name)
+                                            ? prev.filter(m => m !== method.name)
+                                            : [...prev, method.name]
+                                    )
+                                }
+                            >
+                                <Avatar
+                                    src={method.src}
+                                    sx={{
+                                        height: { xs: 25, md: 30 },
+                                        width: { xs: 25, md: 30 },
+                                        mr: 1
+                                    }}
+                                />
+                                {method.name}
+                            </MenuItem>
+                        ))}
+                    </List>
 
                     {sellList.length > 0 && (
-                        <List className="max-h-40 overflow-y-auto bg-gray-50 rounded">
-                            {sellList.map((item) => (
-                                <ListItem key={item.code} dense>
-                                    <ListItemText
-                                        primary={`${item.product_name} x${item.quantity}`}
-                                        secondary={`$${parseFloat(item.selling_price || 0).toFixed(2)} each`}
-                                    />
-                                    <Typography variant="body2" className="font-semibold">
-                                        ${(parseFloat(item.selling_price || 0) * item.quantity).toFixed(2)}
-                                    </Typography>
-                                </ListItem>
-                            ))}
-                        </List>
+                        <>
+                            <Typography variant="subtitle2" sx={{ mb: 1, fontSize: { xs: "0.875rem", md: "1rem" } }}>
+                                Order Items:
+                            </Typography>
+                            <List
+                                className="max-h-40 overflow-y-auto bg-gray-50 rounded"
+                                sx={{
+                                    maxHeight: { xs: "120px", md: "160px" }
+                                }}
+                            >
+                                {sellList.map((item) => (
+                                    <ListItem key={item.code} dense sx={{ py: { xs: 0.5, md: 1 } }}>
+                                        <ListItemText
+                                            primary={`${item.product_name} x${item.quantity}`}
+                                            secondary={`$${parseFloat(item.selling_price || 0).toFixed(2)} each`}
+                                            primaryTypographyProps={{
+                                                fontSize: { xs: "0.875rem", md: "1rem" }
+                                            }}
+                                            secondaryTypographyProps={{
+                                                fontSize: { xs: "0.75rem", md: "0.875rem" }
+                                            }}
+                                        />
+                                        <Typography
+                                            variant="body2"
+                                            className="font-semibold"
+                                            sx={{ fontSize: { xs: "0.875rem", md: "1rem" } }}
+                                        >
+                                            ${(parseFloat(item.selling_price || 0) * item.quantity).toFixed(2)}
+                                        </Typography>
+                                    </ListItem>
+                                ))}
+                            </List>
+                        </>
                     )}
                 </DialogContent>
-                <DialogActions className="p-4">
-                    <Button onClick={() => setPaymentDialog(false)} color="inherit">
+                <DialogActions
+                    className="p-4"
+                    sx={{
+                        flexDirection: { xs: "column", sm: "row" },
+                        gap: { xs: 1, sm: 0 },
+                        p: { xs: 2, md: 3 }
+                    }}
+                >
+
+                    <Button onClick={() => setPaymentDialog(false)} color="inherit" fullWidth className="text-error py-3 block sm:hidden">
                         Cancel
                     </Button>
                     <Button
                         onClick={processPayment}
                         variant="contained"
-                        disabled={!selectedPaymentMethod || sellList.length === 0 || processingPayment}
-                        className="bg-green-600 text-white"
+
+                        disabled={(selectedPaymentMethod.length == 0) || (sellList.length === 0)}
+                        className="text-white py-3"
+                        fullWidth
+
+                        sx={{
+                            background: StyleColors.componentsColor,
+                            order: { xs: 1, sm: 2 },
+                            ml: { sm: 1 }
+                        }}
                     >
                         {processingPayment ? 'Processing...' : 'Complete Payment'}
                     </Button>
+
                 </DialogActions>
             </Dialog>
         </div>

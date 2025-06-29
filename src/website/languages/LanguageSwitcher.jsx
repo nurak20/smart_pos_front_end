@@ -5,7 +5,7 @@ import { set } from "date-fns";
 import { StyleColors } from "../extension/Extension";
 
 
-const LanguageSwitcher = () => {
+const LanguageSwitcher = ({ isShowBorder = false }) => {
     const [seletedLaunguage, setSelectedLanguage] = useState();
     const languages = [
         { code: "en", name: "English", flag: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Flag_of_the_United_Kingdom_%281-2%29.svg/1200px-Flag_of_the_United_Kingdom_%281-2%29.svg.png' }, // UK flag (commonly used for English)
@@ -35,7 +35,7 @@ const LanguageSwitcher = () => {
                 <div className="pos-navbar-action-item overflow-hidden" type="button"
                     id="languageDropdown"
                     data-bs-toggle="dropdown"
-                    aria-expanded="false" style={{ height: '30px', width: '30px', background: StyleColors.componentsLightColor, borderRadius: '50%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                    aria-expanded="false" style={{ height: '25px', width: '25px', background: StyleColors.componentsLightColor, borderRadius: '50%', display: 'flex', justifyContent: 'center', alignItems: 'center', border: isShowBorder ? '1px solid #ccc' : 'none' }}>
                     {seletedLaunguage ? <img src={seletedLaunguage} alt="" className="h-100" /> : <HiLanguage />}
                 </div>
 

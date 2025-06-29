@@ -1,0 +1,13 @@
+.shadow-components-color {
+    box-shadow: -7px 4px 73px -16px rgba(130, 28, 78, 0.45);
+    -webkit-box-shadow: -7px 4px 73px -16px rgba(130, 28, 78, 0.45);
+    -moz-box-shadow: -7px 4px 73px -16px rgba(130, 28, 78, 0.45);
+    transition: 0.3s;
+}
+
+.shadow-components-color:hover {
+    background-color: rgb(120, 54, 78);
+    box-shadow: -7px 4px 73px -16px rgba(130, 28, 78, 0.7);
+    -webkit-box-shadow: -7px 4px 73px -16px rgba(130, 28, 78, 0.7);
+    -moz-box-shadow: -7px 4px 73px -16px rgba(130, 28, 78, 0.7);
+}

@@ -31,6 +31,15 @@ class AuthService {
             return false;
         }
     }
+    saveUserData(userData) {
+        try {
+            localStorage.setItem(this.USER_KEY, JSON.stringify(userData));
+            return true;
+        } catch (error) {
+            console.error('Error saving user data:', error);
+            return false;
+        }
+    }
 
     // Get stored token
     getToken() {
