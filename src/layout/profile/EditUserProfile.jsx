@@ -76,114 +76,109 @@ export default function EditUserProfile({ userData, onSuccess, onCancel }) {
     };
 
     return (
-        <div
-            className="container center shadow-sm rounded p-4 mt-2 bg-white"
-            style={{ maxWidth: '600px' }}
-        >
-            <div className="w-100">
-                <p className="center gap-2 pt-1 pb-3" style={{ fontSize: '30px' }}>
-                    <PiUserCircle size={30} /> Edit User Profile
-                </p>
-
-                {/* Profile Image Preview */}
-                <div className="flex flex-col items-center mb-6">
-                    <div className="w-32 h-32 rounded-full overflow-hidden border-2 border-gray-200 mb-4">
-                        <img
-                            src={values.image_url}
-                            alt="Profile"
-                            className="w-full h-full object-cover"
-                            onError={(e) => {
-                                e.target.onerror = null;
-                                e.target.src = "https://via.placeholder.com/150";
-                            }}
-                        />
+    <div className="max-w-sm mx-auto bg-white rounded-lg shadow-md overflow-hidden">
+                {/* Header */}
+                <div className="bg-pink-500 px-4 py-3">
+                    <div className="flex items-center gap-2 text-white">
+                        <PiUserCircle size={3} />
+                        <h1 className="text-base font-medium">Edit Profile</h1>
                     </div>
                 </div>
 
-                {serverError && (
-                    <div
-                        className="alert alert-danger text-center"
-                        style={{
-                            color: 'red',
-                            marginBottom: '1rem',
-                            padding: '0.75rem',
-                            border: '1px solid #f5c6cb',
-                            borderRadius: '0.375rem',
-                            backgroundColor: '#f8d7da'
-                        }}
-                    >
-                        {serverError}
+                <div className="p-4">
+                    {/* Profile Image */}
+                    <div className="flex justify-center mb-4">
+                        <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-pink-200">
+                            <img
+                                src={values.image_url}
+                                alt="Profile"
+                                className="w-full h-full object-cover"
+                                loading="lazy"
+                                onError={(e) => {
+                                    e.target.onerror = null;
+                                    e.target.src = "https://via.placeholder.com/150";
+                                }}
+                            />
+                        </div>
                     </div>
-                )}
 
-                <form style={{ width: '100%' }} onSubmit={handleSubmit} noValidate>
-                    <TextField
-                        label="First Name"
-                        name="first_name"
-                        type="text"
-                        value={values.first_name}
-                        onChange={handleChange}
-                        prefixIcon="FaUser"
-                        error={errors.first_name}
-                        required
-                    />
+                    {/* Error Message */}
+                    {serverError && (
+                        <div className="mb-3 p-2 bg-red-50 border border-red-200 rounded text-red-600 text-sm">
+                            {serverError}
+                        </div>
+                    )}
 
-                    <TextField
-                        label="Last Name"
-                        name="last_name"
-                        type="text"
-                        value={values.last_name}
-                        onChange={handleChange}
-                        prefixIcon="FaUser"
-                        error={errors.last_name}
-                        required
-                    />
+                    {/* Form */}
+                    <form onSubmit={handleSubmit} noValidate className="space-y-3">
+                        <TextField
+                            label="First Name"
+                            name="first_name"
+                            type="text"
+                            value={values.first_name}
+                            onChange={handleChange}
+                            prefixIcon="FaUser"
+                            error={errors.first_name}
+                            required
+                        />
 
-                    <TextField
-                        label="Image URL"
-                        name="image_url"
-                        type="url"
-                        value={values.image_url}
-                        onChange={handleChange}
-                        prefixIcon="FaImage"
-                        error={errors.image_url}
-                        required
-                    />
+                        <TextField
+                            label="Last Name"
+                            name="last_name"
+                            type="text"
+                            value={values.last_name}
+                            onChange={handleChange}
+                            prefixIcon="FaUser"
+                            error={errors.last_name}
+                            required
+                        />
 
-                    <div className="between">
-                        <Button
-                            variant='text'
-                            sx={{
-                                fontWeight: '400',
-                                textTransform: 'none',
-                                color: "red"
-                            }}
-                            endIcon={<CloseIcon />}
-                            type="button"
-                            className="py-3"
-                            onClick={onCancel}
-                            disabled={submitting}
-                        >
-                            Cancel
-                        </Button>
+                        <TextField
+                            label="Image URL"
+                            name="image_url"
+                            type="url"
+                            value={values.image_url}
+                            onChange={handleChange}
+                            prefixIcon="FaImage"
+                            error={errors.image_url}
+                            required
+                        />
 
-                        <Button
-                            variant='text'
-                            sx={{
-                                fontWeight: '400',
-                                textTransform: 'none',
-                                color: StyleColors.componentsColor
-                            }}
-                            endIcon={<DoneIcon />}
-                            type="submit"
-                            className="py-3"
-                            disabled={submitting}
-                        >
-                            {submitting ? 'Saving...' : 'Save Changes'}
-                        </Button>
-                    </div>
-                </form>
+                        {/* Buttons */}
+                        <div className="flex gap-2 pt-2">
+                            <Button
+                                variant='outlined'
+                                sx={{
+                                    flex: 1,
+                                    textTransform: 'none',
+                                    borderColor: '#e5e7eb',
+                                    color: '#6b7280'
+                                }}
+                                type="button"
+                                onClick={onCancel}
+                                disabled={submitting}
+                            >
+                                Cancel
+                            </Button>
+
+                            <Button
+                                variant='contained'
+                                sx={{
+                                    flex: 1,
+                                    textTransform: 'none',
+                                    backgroundColor: '#ec4899',
+                                    '&:hover': {
+                                        backgroundColor: '#db2777'
+                                    }
+                                }}
+                                type="submit"
+                                disabled={submitting}
+                            >
+                                {submitting ? 'Saving...' : 'Save'}
+                            </Button>
+                        </div>
+                    </form>
+                </div>
             </div>
-        </div>
     );
 }

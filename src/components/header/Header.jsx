@@ -30,7 +30,7 @@ import {
     IoCloseOutline,
     IoKey
 } from 'react-icons/io5';
-import { StyleColors } from '../../website/extension/Extension';
+import { StyleColors, Translate } from '../../website/extension/Extension';
 import LanguageSwitcher from '../../website/languages/LanguageSwitcher';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../layout/auth/AuthContext';
@@ -60,9 +60,9 @@ const Header = () => {
     const navigate = useNavigate();
     const { user } = useAuth();
     const menuItems = [
-        { icon: <IoPersonOutline size={24} />, text: 'Edit Profile', action: () => setIsLogoutDialogOpen(true) },
-        { icon: <IoKey size={24} />, text: 'Change Password', action: () => null },
-        { icon: <IoLogOutOutline size={24} />, text: 'Logout', action: () => logout() },
+        { icon: <IoPersonOutline size={24} />, text: Translate({km:"កែសម្រួលប្រវត្តិរូប",en:"Edit Profile"}), action: () => setIsLogoutDialogOpen(true) },
+        { icon: <IoKey size={24} />, text: Translate({km:"ផ្លាស់ប្តូរពាក្យសម្ងាត់",en:"Change Password"}), action: () => null },
+        { icon: <IoLogOutOutline size={24} />, text: Translate({km:"ចាកចេញ",en:"Logout"}), action: () => logout() },
     ];
 
 
