@@ -43,7 +43,7 @@ import {
     Inventory
 } from '@mui/icons-material';
 import { POS_GET, POS_POST } from '../../website/service/ApiService';
-import { StyleColors } from '../../website/extension/Extension';
+import { StyleColors, Translate } from '../../website/extension/Extension';
 import LanguageSwitcher from '../../website/languages/LanguageSwitcher';
 import { CheckCircle } from 'lucide-react';
 import { useAuth } from '../../layout/auth/AuthContext';
@@ -314,7 +314,7 @@ export default function POSAdminSystem() {
             └─ Subtotal: $${formatCurrency(item.sub_total)}
             `).join('\n');
 
-        // Calculate total items
+        // Calculate s
         const totalItems = items.reduce((sum, item) => sum + item.qty, 0);
 
         // Create management link
@@ -471,7 +471,7 @@ export default function POSAdminSystem() {
                                             fontSize: { xs: "1rem", md: "1.25rem" }
                                         }}
                                     >
-                                        {searchQuery ? `No products found for "${searchQuery}"` : 'No products available'}
+                                        {searchQuery ? `No products found for "${searchQuery}"` : `${Translate({km: "មិនមានផលិតផលទេ", en: "No products available"})}`}
                                     </Typography>
                                 </Grid2>
                             ) : (
@@ -611,7 +611,7 @@ export default function POSAdminSystem() {
                             {
                                 sellList.length > 0 ? <Box sx={{ flexGrow: 1 }} /> : <Box sx={{ flexGrow: 1 }} className="center">
                                     <Typography variant="body2" color="text.secondary" sx={{ textAlign: "center", py: 4 }}>
-                                        No items in sell list
+                                        {Translate({ km: 'មិនមានទំនិញក្នុងបញ្ជី', en: 'No items in sell list' })}
                                     </Typography>
                                 </Box>
                             }
@@ -619,11 +619,11 @@ export default function POSAdminSystem() {
                             {/* Payment Section - Always at bottom */}
                             <Box sx={{ mt: 2, p: 2, bgcolor: "grey.100", borderRadius: 1 }}>
                                 <Typography variant="h6" sx={{ display: "flex", justifyContent: "space-between", mb: 1 }}>
-                                    <span>Total Items:</span>
+                                    <span>{Translate({ km: 'ចំនួនទំនិញសរុប ៖', en: 'Total Items:' })}</span>
                                     <span>{totalItems}</span>
                                 </Typography>
                                 <Typography variant="h5" fontWeight="bold" color="success.main" sx={{ display: "flex", justifyContent: "space-between" }}>
-                                    <span>Total Amount:</span>
+                                    <span>{Translate({ km: 'ចំនួនទឹកប្រាក់សរុប :', en: 'Total Amount:' })}</span>
                                     <span>${totalAmount.toFixed(2)}</span>
                                 </Typography>
                             </Box>
@@ -719,7 +719,7 @@ export default function POSAdminSystem() {
                             Order Summary:
                         </Typography>
                         <Typography sx={{ fontSize: { xs: "0.875rem", md: "1rem" } }}>
-                            Total Items: {totalItems}
+                            tems: {totalItems}
                         </Typography>
                         <Typography
                             variant="h5"
