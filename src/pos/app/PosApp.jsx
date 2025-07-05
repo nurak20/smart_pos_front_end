@@ -462,7 +462,7 @@ export default function POSAdminSystem() {
                         >
                             {filteredProducts.length === 0 ? (
                                 <Grid2 xs={12}>
-                                    <Typography
+                                    <p
                                         variant="h6"
                                         sx={{
                                             textAlign: "center",
@@ -472,7 +472,7 @@ export default function POSAdminSystem() {
                                         }}
                                     >
                                         {searchQuery ? `No products found for "${searchQuery}"` : `${Translate({km: "មិនមានផលិតផលទេ", en: "No products available"})}`}
-                                    </Typography>
+                                    </p>
                                 </Grid2>
                             ) : (
                                 filteredProducts.map((product) => (
@@ -563,10 +563,13 @@ export default function POSAdminSystem() {
                             }}
                             elevation={0}
                         >
-                            <Typography variant="h6" sx={{ mb: 2, display: "flex", alignItems: "center" }}>
+                            <p variant="h6" sx={{ mb: 2, display: "flex", alignItems: "center" }}>
                                 <ShoppingCart sx={{ mr: 1 }} />
-                                Sell List ({totalItems} items)
-                            </Typography>
+                                {Translate({ 
+                                    km: `បញ្ជីលក់ (${totalItems} ទំនិញ)`, 
+                                    en: `Sell List (${totalItems} items)` 
+                                })}
+                            </p>
 
                             {sellList.length === 0 ? (
                                 <div className='h-100 flex flex-col justify-center items-center center'>
@@ -610,22 +613,22 @@ export default function POSAdminSystem() {
                             {/* Spacer to push payment section to bottom */}
                             {
                                 sellList.length > 0 ? <Box sx={{ flexGrow: 1 }} /> : <Box sx={{ flexGrow: 1 }} className="center">
-                                    <Typography variant="body2" color="text.secondary" sx={{ textAlign: "center", py: 4 }}>
+                                    <p variant="body2" color="text.secondary" sx={{ textAlign: "center", py: 4 }}>
                                         {Translate({ km: 'មិនមានទំនិញក្នុងបញ្ជី', en: 'No items in sell list' })}
-                                    </Typography>
+                                    </p>
                                 </Box>
                             }
 
                             {/* Payment Section - Always at bottom */}
                             <Box sx={{ mt: 2, p: 2, bgcolor: "grey.100", borderRadius: 1 }}>
-                                <Typography variant="h6" sx={{ display: "flex", justifyContent: "space-between", mb: 1 }}>
+                                <p variant="h6" sx={{ display: "flex", justifyContent: "space-between", mb: 1 }}>
                                     <span>{Translate({ km: 'ចំនួនទំនិញសរុប ៖', en: 'Total Items:' })}</span>
                                     <span>{totalItems}</span>
-                                </Typography>
-                                <Typography variant="h5" fontWeight="bold" color="success.main" sx={{ display: "flex", justifyContent: "space-between" }}>
+                                </p>
+                                <p variant="h5" fontWeight="bold" color="success.main" sx={{ display: "flex", justifyContent: "space-between" }}>
                                     <span>{Translate({ km: 'ចំនួនទឹកប្រាក់សរុប :', en: 'Total Amount:' })}</span>
                                     <span>${totalAmount.toFixed(2)}</span>
-                                </Typography>
+                                </p>
                             </Box>
 
                             <Button
