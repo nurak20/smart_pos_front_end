@@ -126,9 +126,10 @@ export const StyleColors = {
     fontXs: "var(--font-size-xs)",
     ButtonStyle: {
         background: 'linear-gradient(45deg, #e91e63, #f06292)',
-        borderRadius: '10px',
+        borderRadius: '5px',
         fontSize: '16px',
         fontWeight: '500',
+        maxHeight: '45px',
         color: "white",
         padding: '13px 0px',
         textTransform: "none",
@@ -243,3 +244,182 @@ export const StyleTextField =
         },
     },
 }
+
+
+
+
+const TextFieldStyle = {
+    '& .MuiOutlinedInput-root': {
+        outline: 'none !important',
+        maxHeight: '56px', // Set maximum height for the input container
+        height: '56px',    // Set fixed height (optional)
+        '& fieldset': {
+            borderColor: '#e0e0e0',
+            borderWidth: '1px',
+        },
+        '&:hover fieldset': {
+            borderColor: '#e91e63',
+            borderWidth: '1px',
+        },
+        '&.Mui-focused fieldset': {
+            outline: 'none !important',
+            outlineWidth: '0px !important',
+            borderColor: '#e91e63',
+            borderWidth: '2px',
+            boxShadow: 'none !important',
+        },
+        '&:focus': {
+            outline: 'none !important',
+            boxShadow: 'none !important',
+        },
+        '&:focus-visible': {
+            outline: 'none !important',
+            boxShadow: 'none !important',
+        },
+    },
+    '& .MuiInputLabel-root': {
+        '&.Mui-focused': {
+            color: '#e91e63',
+        },
+    },
+    '& .MuiOutlinedInput-input': {
+        outline: 'none !important',
+        boxShadow: 'none !important',
+        maxHeight: '24px',  // Set max height for the actual input text
+        height: '24px',     // Set fixed height for input text
+        padding: '16px 14px', // Adjust padding as needed
+        overflow: 'hidden',   // Hide overflow if text is too long
+        textOverflow: 'ellipsis', // Add ellipsis for overflow text
+        '&:focus': {
+            outline: 'none !important',
+            boxShadow: 'none !important',
+        },
+        '&:focus-visible': {
+            outline: 'none !important',
+            boxShadow: 'none !important',
+        },
+    },
+};
+
+// Alternative versions with different height options:
+
+// Version 1: Small TextField (40px height)
+const TextFieldStyleSmall = {
+    '& .MuiOutlinedInput-root': {
+        outline: 'none !important',
+        maxHeight: '40px',
+        height: '40px',
+        '& fieldset': {
+            borderColor: '#e0e0e0',
+            borderWidth: '1px',
+        },
+        '&:hover fieldset': {
+            borderColor: '#e91e63',
+            borderWidth: '1px',
+        },
+        '&.Mui-focused fieldset': {
+            outline: 'none !important',
+            outlineWidth: '0px !important',
+            borderColor: '#e91e63',
+            borderWidth: '2px',
+            boxShadow: 'none !important',
+        },
+    },
+    '& .MuiInputLabel-root': {
+        '&.Mui-focused': {
+            color: '#e91e63',
+        },
+    },
+    '& .MuiOutlinedInput-input': {
+        outline: 'none !important',
+        boxShadow: 'none !important',
+        padding: '8px 12px',
+        fontSize: '14px',
+    },
+};
+
+// Version 2: Large TextField (64px height)
+const TextFieldStyleLarge = {
+    '& .MuiOutlinedInput-root': {
+        outline: 'none !important',
+        maxHeight: '64px',
+        height: '64px',
+        '& fieldset': {
+            borderColor: '#e0e0e0',
+            borderWidth: '1px',
+        },
+        '&:hover fieldset': {
+            borderColor: '#e91e63',
+            borderWidth: '1px',
+        },
+        '&.Mui-focused fieldset': {
+            outline: 'none !important',
+            outlineWidth: '0px !important',
+            borderColor: '#e91e63',
+            borderWidth: '2px',
+            boxShadow: 'none !important',
+        },
+    },
+    '& .MuiInputLabel-root': {
+        '&.Mui-focused': {
+            color: '#e91e63',
+        },
+    },
+    '& .MuiOutlinedInput-input': {
+        outline: 'none !important',
+        boxShadow: 'none !important',
+        padding: '20px 14px',
+        fontSize: '16px',
+    },
+};
+
+// Version 3: Multiline TextField with max height
+const TextFieldStyleMultiline = {
+    '& .MuiOutlinedInput-root': {
+        outline: 'none !important',
+        maxHeight: '120px', // Allow for multiple lines
+        overflow: 'auto',   // Add scroll if content exceeds max height
+        '& fieldset': {
+            borderColor: '#e0e0e0',
+            borderWidth: '1px',
+        },
+        '&:hover fieldset': {
+            borderColor: '#e91e63',
+            borderWidth: '1px',
+        },
+        '&.Mui-focused fieldset': {
+            outline: 'none !important',
+            outlineWidth: '0px !important',
+            borderColor: '#e91e63',
+            borderWidth: '2px',
+            boxShadow: 'none !important',
+        },
+    },
+    '& .MuiInputLabel-root': {
+        '&.Mui-focused': {
+            color: '#e91e63',
+        },
+    },
+    '& .MuiOutlinedInput-input': {
+        outline: 'none !important',
+        boxShadow: 'none !important',
+        resize: 'none', // Prevent manual resizing
+        '&:focus': {
+            outline: 'none !important',
+            boxShadow: 'none !important',
+        },
+    },
+};
+
+// Usage examples:
+// <TextField sx={TextFieldStyle} />
+// <TextField sx={TextFieldStyleSmall} />
+// <TextField sx={TextFieldStyleLarge} />
+// <TextField multiline rows={3} sx={TextFieldStyleMultiline} />
+
+export {
+    TextFieldStyle,
+    TextFieldStyleSmall,
+    TextFieldStyleLarge,
+    TextFieldStyleMultiline
+};
