@@ -3,9 +3,21 @@ import { useNavigate, Link, useLocation } from 'react-router-dom';
 
 import website from '../../website/json/website.json';
 import { PiUserCircle } from 'react-icons/pi';
-import { Avatar, Button } from '@mui/material';
+import { FaUser } from 'react-icons/fa';
+import { IoIosLock } from 'react-icons/io';
+import {
+    Avatar,
+    Button,
+    TextField,
+    FormControl,
+    InputLabel,
+    OutlinedInput,
+    InputAdornment,
+    IconButton,
+    FormHelperText
+} from '@mui/material';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { POSRoute } from '../../website/routes/Routes';
-import TextField from '../../website/components/text_field/POSTextField';
 import { POS_POST } from '../../website/service/ApiService';
 import { StyleColors, Translate } from '../../website/extension/Extension';
 import { useAuth } from './AuthContext';
@@ -22,6 +34,7 @@ export default function Login() {
     const [errors, setErrors] = useState({});
     const [serverError, setServerError] = useState('');
     const [submitting, setSubmitting] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate();
     const location = useLocation();
     const { login } = useAuth();
@@ -53,6 +66,14 @@ export default function Login() {
         validate({ [name]: value });
         // Clear server error when user starts typing
         if (serverError) setServerError('');
+    };
+
+    const handleClickShowPassword = () => {
+        setShowPassword(!showPassword);
+    };
+
+    const handleMouseDownPassword = (event) => {
+        event.preventDefault();
     };
 
     const handleSubmit = async (e) => {
@@ -166,47 +187,137 @@ export default function Login() {
                                     onSubmit={handleSubmit}
                                     noValidate
                                 >
-                                    <TextField
-                                        label="Username"
-                                        name="username"
-                                        type="text"
-                                        value={values.username}
-                                        onChange={handleChange}
-                                        prefixIcon="FaUser"
-                                        error={errors.username}
-                                        required
-                                        autoComplete="username"
-                                    />
+                                    {/* Username Field */}
+                                    <FormControl
+                                        fullWidth
+                                        margin="normal"
+                                        error={!!errors.username}
+                                        sx={{ mb: 2 }}
+                                    >
+                                        <TextField
+                                            label="Username"
+                                            name="username"
+                                            type="text"
+                                            value={values.username}
+                                            onChange={handleChange}
+                                            error={!!errors.username}
+                                            helperText={errors.username}
+                                            required
+                                            autoComplete="username"
+                                            InputProps={{
+                                                startAdornment: (
+                                                    <InputAdornment position="start">
+                                                        <FaUser style={{ color: '#e91e63' }} />
+                                                    </InputAdornment>
+                                                ),
+                                            }}
+                                            sx={{
+                                                '& .MuiOutlinedInput-root': {
+                                                    '& fieldset': {
+                                                        borderColor: '#e0e0e0',
+                                                    },
+                                                    '&:hover fieldset': {
+                                                        borderColor: '#e91e63',
+                                                    },
+                                                    '&.Mui-focused fieldset': {
+                                                        borderColor: '#e91e63',
+                                                    },
+                                                },
+                                                '& .MuiInputLabel-root': {
+                                                    '&.Mui-focused': {
+                                                        color: '#e91e63',
+                                                    },
+                                                },
+                                            }}
+                                        />
+                                    </FormControl>
 
-                                    <TextField
-                                        label="Password"
-                                        name="password"
-                                        type="password"
-                                        value={values.password}
-                                        onChange={handleChange}
-                                        prefixIcon="IoIosLock"
-                                        typeIcon="io"
-                                        error={errors.password}
-                                        required
-                                        autoComplete="current-password"
-                                    />
+                                    {/* Password Field */}
+                                    <FormControl
+                                        fullWidth
+                                        margin="normal"
+                                        error={!!errors.password}
+                                        sx={{ mb: 2 }}
+                                    >
+                                        <TextField
+                                            label="Password"
+                                            name="password"
+                                            type={showPassword ? 'text' : 'password'}
+                                            value={values.password}
+                                            onChange={handleChange}
+                                            error={!!errors.password}
+                                            helperText={errors.password}
+                                            required
+                                            autoComplete="current-password"
+                                            InputProps={{
+                                                startAdornment: (
+                                                    <InputAdornment position="start">
+                                                        <IoIosLock style={{ color: '#e91e63', fontSize: '18px' }} />
+                                                    </InputAdornment>
+                                                ),
+                                                endAdornment: (
+                                                    <InputAdornment position="end">
+                                                        <IconButton
+                                                            aria-label="toggle password visibility"
+                                                            onClick={handleClickShowPassword}
+                                                            onMouseDown={handleMouseDownPassword}
+                                                            edge="end"
+                                                            sx={{ color: '#e91e63' }}
+                                                        >
+                                                            {showPassword ? <VisibilityOff /> : <Visibility />}
+                                                        </IconButton>
+                                                    </InputAdornment>
+                                                ),
+                                            }}
+                                            sx={{
+                                                '& .MuiOutlinedInput-root': {
+                                                    '& fieldset': {
+                                                        borderColor: '#e0e0e0',
+                                                    },
+                                                    '&:hover fieldset': {
+                                                        borderColor: '#e91e63',
+                                                    },
+                                                    '&.Mui-focused fieldset': {
+                                                        borderColor: '#e91e63',
+                                                    },
+                                                },
+                                                '& .MuiInputLabel-root': {
+                                                    '&.Mui-focused': {
+                                                        color: '#e91e63',
+                                                    },
+                                                },
+                                            }}
+                                        />
+                                    </FormControl>
 
                                     <Button
                                         sx={{
-                                            background: StyleColors.componentsColor,
+                                            background: 'linear-gradient(45deg, #e91e63, #f06292)',
                                             borderRadius: '10px',
                                             fontSize: '16px',
-                                            fontWeight: '400',
+                                            fontWeight: '500',
                                             color: "white",
                                             padding: '13px 0px',
                                             textTransform: "none",
-                                            '&hover': {
-                                                background: StyleColors.buttonLightPink,
-                                                color: 'white',
+                                            boxShadow: '0 4px 15px rgba(233, 30, 99, 0.3)',
+                                            '&:hover': {
+                                                background: 'linear-gradient(45deg, #c2185b, #e91e63)',
+                                                boxShadow: '0 6px 20px rgba(233, 30, 99, 0.4)',
+                                                transform: 'translateY(-1px)',
                                             },
+                                            '&:active': {
+                                                transform: 'translateY(0px)',
+                                                boxShadow: '0 2px 10px rgba(233, 30, 99, 0.3)',
+                                            },
+                                            '&:disabled': {
+                                                background: '#f5f5f5',
+                                                color: '#bdbdbd',
+                                                boxShadow: 'none',
+                                            },
+                                            transition: 'all 0.3s ease',
                                         }}
                                         type="submit"
-                                        className="shadow-components-color w-100 my-3"
+                                        className="w-100 my-3"
                                         disabled={submitting}
                                     >
                                         {submitting

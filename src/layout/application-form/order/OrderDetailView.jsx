@@ -247,7 +247,7 @@ const OrderDetailPage = () => {
                     <CardContent>
                         <Typography variant="h6" gutterBottom>
                             Order Items
-                        </Typography>X
+                        </Typography>
                         <List>
                             {order_details.map((item, index) => (
                                 <React.Fragment key={index}>

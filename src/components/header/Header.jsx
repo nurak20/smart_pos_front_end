@@ -197,7 +197,7 @@ const Header = () => {
                     flexDirection: 'column',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    minHeight: '100vh',
+
                     textAlign: 'center',
                     padding: 4
                 }}>

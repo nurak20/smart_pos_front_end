@@ -256,7 +256,7 @@ function AppAdmin() {
     const administrator = () => {
         return (
             <>
-                <div className="app-container fixed-top w-full h-full flex flex-col">
+                <div className="app-container w-full h-full flex flex-col">
                     <Header />
                     <Routes>
                         <Route path="/" element={<div className='p-2'><ManageOrder /></div>} />
