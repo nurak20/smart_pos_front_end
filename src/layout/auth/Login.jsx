@@ -19,7 +19,7 @@ import {
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { POSRoute } from '../../website/routes/Routes';
 import { POS_POST } from '../../website/service/ApiService';
-import { StyleColors, Translate } from '../../website/extension/Extension';
+import { StyleColors, StyleTextField, Translate } from '../../website/extension/Extension';
 import { useAuth } from './AuthContext';
 import { Container } from 'lucide-react';
 import './style.css'
@@ -211,24 +211,7 @@ export default function Login() {
                                                     </InputAdornment>
                                                 ),
                                             }}
-                                            sx={{
-                                                '& .MuiOutlinedInput-root': {
-                                                    '& fieldset': {
-                                                        borderColor: '#e0e0e0',
-                                                    },
-                                                    '&:hover fieldset': {
-                                                        borderColor: '#e91e63',
-                                                    },
-                                                    '&.Mui-focused fieldset': {
-                                                        borderColor: '#e91e63',
-                                                    },
-                                                },
-                                                '& .MuiInputLabel-root': {
-                                                    '&.Mui-focused': {
-                                                        color: '#e91e63',
-                                                    },
-                                                },
-                                            }}
+                                            sx={StyleColors.TextFieldStyle}
                                         />
                                     </FormControl>
 
@@ -269,53 +252,14 @@ export default function Login() {
                                                     </InputAdornment>
                                                 ),
                                             }}
-                                            sx={{
-                                                '& .MuiOutlinedInput-root': {
-                                                    '& fieldset': {
-                                                        borderColor: '#e0e0e0',
-                                                    },
-                                                    '&:hover fieldset': {
-                                                        borderColor: '#e91e63',
-                                                    },
-                                                    '&.Mui-focused fieldset': {
-                                                        borderColor: '#e91e63',
-                                                    },
-                                                },
-                                                '& .MuiInputLabel-root': {
-                                                    '&.Mui-focused': {
-                                                        color: '#e91e63',
-                                                    },
-                                                },
-                                            }}
+                                            sx={StyleColors.TextFieldStyle}
                                         />
                                     </FormControl>
 
                                     <Button
-                                        sx={{
-                                            background: 'linear-gradient(45deg, #e91e63, #f06292)',
-                                            borderRadius: '10px',
-                                            fontSize: '16px',
-                                            fontWeight: '500',
-                                            color: "white",
-                                            padding: '13px 0px',
-                                            textTransform: "none",
-                                            boxShadow: '0 4px 15px rgba(233, 30, 99, 0.3)',
-                                            '&:hover': {
-                                                background: 'linear-gradient(45deg, #c2185b, #e91e63)',
-                                                boxShadow: '0 6px 20px rgba(233, 30, 99, 0.4)',
-                                                transform: 'translateY(-1px)',
-                                            },
-                                            '&:active': {
-                                                transform: 'translateY(0px)',
-                                                boxShadow: '0 2px 10px rgba(233, 30, 99, 0.3)',
-                                            },
-                                            '&:disabled': {
-                                                background: '#f5f5f5',
-                                                color: '#bdbdbd',
-                                                boxShadow: 'none',
-                                            },
-                                            transition: 'all 0.3s ease',
-                                        }}
+                                        sx={
+                                            StyleColors.ButtonStyle
+                                        }
                                         type="submit"
                                         className="w-100 my-3"
                                         disabled={submitting}

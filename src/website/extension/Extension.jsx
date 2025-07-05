@@ -124,4 +124,122 @@ export const StyleColors = {
     fontMedium: "var(--font-size-md)",
     fontLarge: "var(--font-size-lg)",
     fontXs: "var(--font-size-xs)",
+    ButtonStyle: {
+        background: 'linear-gradient(45deg, #e91e63, #f06292)',
+        borderRadius: '10px',
+        fontSize: '16px',
+        fontWeight: '500',
+        color: "white",
+        padding: '13px 0px',
+        textTransform: "none",
+        boxShadow: '0 4px 15px rgba(233, 30, 99, 0.3)',
+        '&:hover': {
+            background: 'linear-gradient(45deg, #c2185b, #e91e63)',
+            boxShadow: '0 6px 20px rgba(233, 30, 99, 0.4)',
+
+        },
+        '&:active': {
+
+            boxShadow: '0 2px 10px rgba(233, 30, 99, 0.3)',
+        },
+        '&:disabled': {
+            background: '#f5f5f5',
+            color: '#bdbdbd',
+            boxShadow: 'none',
+        },
+        transition: 'all 0.3s ease',
+    },
+    TextFieldStyle: {
+        '& .MuiOutlinedInput-root': {
+            outline: 'none !important',
+            '& fieldset': {
+                borderColor: '#e0e0e0',
+                borderWidth: '1px',
+            },
+            '&:hover fieldset': {
+                borderColor: '#e91e63',
+                borderWidth: '1px',
+            },
+            '&.Mui-focused fieldset': {
+                outline: 'none !important',
+                outlineWidth: '0px !important',
+                borderColor: '#e91e63',
+                borderWidth: '2px',
+                boxShadow: 'none !important',
+            },
+            '&:focus': {
+                outline: 'none !important',
+                boxShadow: 'none !important',
+            },
+            '&:focus-visible': {
+                outline: 'none !important',
+                boxShadow: 'none !important',
+            },
+        },
+        '& .MuiInputLabel-root': {
+            '&.Mui-focused': {
+                color: '#e91e63',
+            },
+        },
+        '& .MuiOutlinedInput-input': {
+            outline: 'none !important',
+            boxShadow: 'none !important',
+            '&:focus': {
+                outline: 'none !important',
+                boxShadow: 'none !important',
+            },
+            '&:focus-visible': {
+                outline: 'none !important',
+                boxShadow: 'none !important',
+            },
+        },
+    }
+
 };
+
+export const StyleTextField =
+{
+    '& .MuiOutlinedInput-root': {
+        outline: 'none !important',
+        '& fieldset': {
+            borderColor: '#e0e0e0',
+            borderWidth: '1px',
+        },
+        '&:hover fieldset': {
+            borderColor: '#e91e63',
+            borderWidth: '1px',
+        },
+        '&.Mui-focused fieldset': {
+            outline: 'none !important',
+            outlineWidth: '0px !important',
+            borderColor: '#e91e63',
+            borderWidth: '2px',
+            boxShadow: 'none !important',
+        },
+        '&:focus': {
+            outline: 'none !important',
+            boxShadow: 'none !important',
+        },
+        '&:focus-visible': {
+            outline: 'none !important',
+            boxShadow: 'none !important',
+        },
+    },
+    '& .MuiInputLabel-root': {
+        '&.Mui-focused': {
+            color: '#e91e63',
+        },
+    },
+    '& .MuiOutlinedInput-input': {
+        outline: 'none !important',
+        boxShadow: 'none !important',
+        '&:focus': {
+            outline: 'none !important',
+            boxShadow: 'none !important',
+        },
+        '&:focus-visible': {
+            outline: 'none !important',
+            boxShadow: 'none !important',
+        },
+    },
+}
